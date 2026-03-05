@@ -24,6 +24,7 @@ import com.ludas.testapp.database.UserDao;
  * create an instance of this fragment.
  */
 public class SettingsFragment extends Fragment {
+    private static final String TAG = "SettingsFragment";
     private EditText firstName, lastName;
     private Button submitButton;
 
@@ -33,10 +34,9 @@ public class SettingsFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param databaseName Database name.
      * @return A new instance of fragment SettingsFragment.
      */
-    public static SettingsFragment newInstance(String databaseName) {
+    public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
         //args.putString(KEY_DATABASENAME, databaseName);
@@ -59,19 +59,12 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_settings, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        view.setTag(TAG);
         database = AppDatabase.getInstance(view.getContext());
         firstName = view.findViewById(R.id.t5);
         lastName = view.findViewById(R.id.t4);
         submitButton = view.findViewById(R.id.submit_button);
-
-
-        if(firstName == null || lastName == null || submitButton == null) return;
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,5 +81,6 @@ public class SettingsFragment extends Fragment {
                 lastName.setText("");
             }
         });
+        return view;
     }
 }

@@ -25,6 +25,7 @@ import com.ludas.testapp.fragments.ProfileFragment;
 import com.ludas.testapp.fragments.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG = "MainActivity";
     ActivityMainBinding binding;
     String databaseName;
 
@@ -39,28 +40,23 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        String databaseName = "database-name";
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new HomeFragment());
+        if(savedInstanceState == null) {
+            replaceFragment(HomeFragment.newInstance());
+        }
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
-            switch (itemId) {
-                case R.id.bottom_nav_menu_home: {
-
-                    break;
-                }
-            }
             if (itemId == R.id.bottom_nav_menu_home) {
-                replaceFragment(new HomeFragment());
+                replaceFragment(HomeFragment.newInstance());
             }
             if(itemId == R.id.bottom_nav_menu_profile) {
-                replaceFragment(new ProfileFragment());
+                replaceFragment(ProfileFragment.newInstance());
             }
             if(itemId == R.id.bottom_nav_menu_settings) {
-                replaceFragment(SettingsFragment.newInstance(databaseName));
+                replaceFragment(SettingsFragment.newInstance());
             }
 
             return true;
