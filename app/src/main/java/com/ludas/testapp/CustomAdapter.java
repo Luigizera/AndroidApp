@@ -4,12 +4,15 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ludas.testapp.database.AppDatabase;
 import com.ludas.testapp.database.User;
+import com.ludas.testapp.database.UserDao;
 
 import java.util.List;
 
@@ -21,6 +24,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         private final TextView recId;
         private final TextView recfname;
         private final TextView reclname;
+        private final ImageButton recdelete;
 
         public ViewHolder(View view) {
             super(view);
@@ -34,6 +38,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             recId = (TextView) view.findViewById(R.id.recId);
             recfname = (TextView) view.findViewById(R.id.recfname);
             reclname = (TextView) view.findViewById(R.id.reclname);
+            recdelete = (ImageButton) view.findViewById(R.id.recdelete);
         }
 
         public TextView getRecId() {
@@ -46,6 +51,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
         public TextView getReclname() {
             return reclname;
+        }
+
+        public ImageButton getRecdelete() {
+            return recdelete;
         }
     }
 
@@ -65,9 +74,22 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.getRecId().setText(Integer.toString(users.get(position).getId()));
+        int userId = users.get(position).getId();
+        viewHolder.getRecId().setText(Integer.toString(userId));
         viewHolder.getRecfname().setText(users.get(position).getFirstName());
         viewHolder.getReclname().setText(users.get(position).getLastName());
+        viewHolder.getRecdelete().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppDatabase database = AppDatabase.getInstance(view.getContext());
+
+                UserDao userDao = database.userDao();
+                userDao.deleteById(userId);
+                int pos = viewHolder.getAbsoluteAdapterPosition();
+                users.remove(pos);
+                notifyItemRemoved(pos);
+            }
+        });
     }
 
     @Override

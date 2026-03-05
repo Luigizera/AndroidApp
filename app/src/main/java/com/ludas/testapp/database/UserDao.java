@@ -20,6 +20,9 @@ public interface UserDao {
             "last_name LIKE :last LIMIT 1")
     User findByName(String first, String last);
 
+    @Query("DELETE FROM users WHERE id IN (:id)")
+    void deleteById(int id);
+
     @Insert
     void insertAll(User... users);
 
