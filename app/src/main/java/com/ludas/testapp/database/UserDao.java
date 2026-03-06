@@ -16,12 +16,15 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE id IN (:userIds)")
     List<User> loadAllByIds(int[] userIds);
 
+    @Query("SELECT * FROM users WHERE id IN (:userId)")
+    User findById(int userId);
+
     @Query("SELECT * FROM users WHERE first_name LIKE :first AND " +
             "last_name LIKE :last LIMIT 1")
     User findByName(String first, String last);
 
-    @Query("DELETE FROM users WHERE id IN (:id)")
-    void deleteById(int id);
+    @Query("DELETE FROM users WHERE id IN (:userId)")
+    void deleteById(int userId);
 
     @Insert
     void insertAll(User... users);

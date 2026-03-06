@@ -16,49 +16,32 @@ import com.ludas.testapp.database.UserDao;
 
 import java.util.List;
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
+public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapter.ViewHolder> {
 
     private List<User> users;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView recId;
-        private final TextView recfname;
-        private final TextView reclname;
-        private final ImageButton recdelete;
+        protected final TextView recId;
+        protected final TextView recfname;
+        protected final TextView reclname;
+        protected final ImageButton recdelete;
 
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                }
-            });
 
             recId = (TextView) view.findViewById(R.id.recId);
             recfname = (TextView) view.findViewById(R.id.recfname);
             reclname = (TextView) view.findViewById(R.id.reclname);
             recdelete = (ImageButton) view.findViewById(R.id.recdelete);
         }
-
-        public TextView getRecId() {
-            return recId;
-        }
-
-        public TextView getRecfname() {
-            return recfname;
-        }
-
-        public TextView getReclname() {
-            return reclname;
-        }
-
-        public ImageButton getRecdelete() {
-            return recdelete;
-        }
     }
 
-    public CustomAdapter(List<User> users) {
+    public interface OnListClicked {
+        void onSelected(int userId);
+    }
+
+    public HomeFragmentAdapter(List<User> users) {
         this.users = users;
     }
 
@@ -75,10 +58,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         int userId = users.get(position).getId();
-        viewHolder.getRecId().setText(Integer.toString(userId));
-        viewHolder.getRecfname().setText(users.get(position).getFirstName());
-        viewHolder.getReclname().setText(users.get(position).getLastName());
-        viewHolder.getRecdelete().setOnClickListener(new View.OnClickListener() {
+        viewHolder.recId.setText(Integer.toString(userId));
+        viewHolder.recfname.setText(users.get(position).getFirstName());
+        viewHolder.reclname.setText(users.get(position).getLastName());
+        viewHolder.recdelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AppDatabase database = AppDatabase.getInstance(view.getContext());
@@ -88,6 +71,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 int pos = viewHolder.getAbsoluteAdapterPosition();
                 users.remove(pos);
                 notifyItemRemoved(pos);
+            }
+        });
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    OnListClicked listener = (OnListClicked) view.getContext();
+                    listener.onSelected(userId);
+                }
+                catch (ClassCastException e) {
+                    return;
+                }
             }
         });
     }

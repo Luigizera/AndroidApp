@@ -24,7 +24,7 @@ import com.ludas.testapp.fragments.HomeFragment;
 import com.ludas.testapp.fragments.ProfileFragment;
 import com.ludas.testapp.fragments.SettingsFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements HomeFragmentAdapter.OnListClicked {
     public static final String TAG = "MainActivity";
     ActivityMainBinding binding;
     String databaseName;
@@ -44,60 +44,48 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         if(savedInstanceState == null) {
-            replaceFragment(HomeFragment.newInstance());
+            addFragment(HomeFragment.newInstance(), HomeFragment.TAG);
         }
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
             if (itemId == R.id.bottom_nav_menu_home) {
-                replaceFragment(HomeFragment.newInstance());
+                replaceFragment(HomeFragment.newInstance(), HomeFragment.TAG);
             }
             if(itemId == R.id.bottom_nav_menu_profile) {
-                replaceFragment(ProfileFragment.newInstance());
+                replaceFragment(ProfileFragment.newInstance(User.NULL_ID), ProfileFragment.TAG);
             }
             if(itemId == R.id.bottom_nav_menu_settings) {
-                replaceFragment(SettingsFragment.newInstance());
+                replaceFragment(SettingsFragment.newInstance(), SettingsFragment.TAG);
             }
 
             return true;
         });
-
-        /*t1 = findViewById(R.id.t1);
-        t2 = findViewById(R.id.t2);
-        submit_button = findViewById(R.id.submit_button);
-
-        submit_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new bgThread().start();
-            }
-        });
-        */
     }
 
-    private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
-        fragmentTransaction.commit();
+    private void addFragment(Fragment fragment, String tag) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.frame_layout, fragment, tag)
+                .commit();
     }
 
-    /*class bgThread extends Thread {
-        public void run() {
-            super.run();
-            AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                    AppDatabase.class, "database-name").allowMainThreadQueries().build();
+    private void replaceFragment(Fragment fragment, String tag) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_layout, fragment, tag)
+                .commit();
+    }
+    private void replaceWithBackStack(Fragment fragment, String tag) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_layout, fragment, tag)
+                .addToBackStack(tag)
+                .commit();
+    }
 
-            UserDao userDao = db.userDao();
-            if(t1.getText().toString().isEmpty()) {
-                return;
-            }
-            if(t2.getText().toString().isEmpty()) {
-                return;
-            }
-            userDao.insertAll(new User(t1.getText().toString(), t2.getText().toString()));
-            t1.setText("");
-            t2.setText("");
-        }
-    }*/
+    @Override
+    public void onSelected(int userId) {
+        replaceWithBackStack(ProfileFragment.newInstance(userId), ProfileFragment.TAG);
+    }
 }

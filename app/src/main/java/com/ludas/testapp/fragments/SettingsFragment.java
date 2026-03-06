@@ -24,7 +24,8 @@ import com.ludas.testapp.database.UserDao;
  * create an instance of this fragment.
  */
 public class SettingsFragment extends Fragment {
-    private static final String TAG = "SettingsFragment";
+
+    public static final String TAG = "SettingsFragment";
     private EditText firstName, lastName;
     private Button submitButton;
 
@@ -60,7 +61,6 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
-        view.setTag(TAG);
         database = AppDatabase.getInstance(view.getContext());
         firstName = view.findViewById(R.id.t5);
         lastName = view.findViewById(R.id.t4);

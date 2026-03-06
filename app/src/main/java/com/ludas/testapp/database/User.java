@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "users")
 public class User {
+    public static final int NULL_ID = -1;
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id;

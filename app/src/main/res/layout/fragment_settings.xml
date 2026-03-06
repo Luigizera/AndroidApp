@@ -7,57 +7,53 @@
     android:background="@color/cardview_light_background"
     tools:context=".fragments.SettingsFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <EditText
-            android:id="@+id/t4"
-            android:layout_width="300dp"
-            android:layout_height="48dp"
-            android:layout_marginBottom="92dp"
-            android:hint="@string/hint_second_name"
-            app:layout_constraintBottom_toTopOf="@+id/submit_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <EditText
-            android:id="@+id/t5"
-            android:layout_width="300dp"
-            android:layout_height="48dp"
-            android:layout_marginBottom="48dp"
-            android:autofillHints=""
-            android:hint="@string/hint_first_name"
-            android:inputType="text|textNoSuggestions"
-            app:layout_constraintBottom_toTopOf="@+id/t4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/submit_button"
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="76dp"
-            android:layout_marginBottom="192dp"
-            android:text="@string/submit_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="64dp"
-            android:text="Settings Fragment"
-            android:textSize="26dp"
-            app:layout_constraintBottom_toTopOf="@+id/t5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="64dp"
+                android:padding="16dp"
+                android:text="Settings Fragment"
+                android:textSize="26sp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <EditText
+                android:id="@+id/t5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="156dp"
+                android:hint="@string/hint_first_name"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/t4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="220dp"
+                android:hint="@string/hint_second_name"
+                android:padding="10dp" />
+
+            <Button
+                android:id="@+id/submit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="300dp"
+                android:text="@string/submit_button" />
+        </FrameLayout>
+    </ScrollView>
+
 
 </FrameLayout>

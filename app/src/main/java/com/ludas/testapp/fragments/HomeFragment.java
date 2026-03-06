@@ -1,9 +1,9 @@
 package com.ludas.testapp.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ludas.testapp.CustomAdapter;
+import com.ludas.testapp.HomeFragmentAdapter;
 import com.ludas.testapp.R;
 import com.ludas.testapp.database.AppDatabase;
 import com.ludas.testapp.database.User;
@@ -27,22 +27,18 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment {
 
+    public static final String TAG = "HomeFragment";
     private RecyclerView recyclerView;
     private AppDatabase database;
-    private CustomAdapter adapter;
+    private HomeFragmentAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<User> users;
+
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment HomeFragment.
-     */
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -65,8 +61,13 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recview);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new CustomAdapter(users);
+        adapter = new HomeFragmentAdapter(users);
         recyclerView.setAdapter(adapter);
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
     }
 }
