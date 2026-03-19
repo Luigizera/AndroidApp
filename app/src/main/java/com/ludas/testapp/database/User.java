@@ -1,27 +1,32 @@
 package com.ludas.testapp.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "users")
 public class User {
-    public static final int NULL_ID = -1;
-    @PrimaryKey(autoGenerate = true)
+    /*@PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private int id;
+    private int id;*/
+    @PrimaryKey(autoGenerate = false)
+    @NonNull
+    @ColumnInfo(name = "date")
+    private String date;
 
     @ColumnInfo(name = "first_name")
     private String firstName;
     @ColumnInfo(name = "last_name")
     private String lastName;
 
-    public User(String firstName, String lastName) {
+    public User(String date, String firstName, String lastName) {
+        this.date = date;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public int getId() { return id; }
+    public String getDate() { return date; }
 
     public String getFirstName() {
         return firstName;
@@ -31,8 +36,8 @@ public class User {
         return lastName;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public void setLastName(String lastName) {

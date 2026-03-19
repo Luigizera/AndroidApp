@@ -1,6 +1,7 @@
 package com.ludas.testapp;
 
 import android.annotation.SuppressLint;
+import android.icu.util.Calendar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,24 +22,24 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
     private List<User> users;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        protected final TextView recId;
-        protected final TextView recfname;
-        protected final TextView reclname;
-        protected final ImageButton recdelete;
+        protected final TextView recDate;
+        protected final TextView recFirstName;
+        protected final TextView recLastName;
+        protected final ImageButton recDelete;
 
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
 
-            recId = (TextView) view.findViewById(R.id.recId);
-            recfname = (TextView) view.findViewById(R.id.recfname);
-            reclname = (TextView) view.findViewById(R.id.reclname);
-            recdelete = (ImageButton) view.findViewById(R.id.recdelete);
+            recDate = (TextView) view.findViewById(R.id.singlerowdesign_recview_date);
+            recFirstName = (TextView) view.findViewById(R.id.singlerowdesign_recview_firstName);
+            recLastName = (TextView) view.findViewById(R.id.singlerowdesign_recview_lastName);
+            recDelete = (ImageButton) view.findViewById(R.id.singlerowdesign_recview_delete);
         }
     }
 
     public interface OnListClicked {
-        void onSelected(int userId);
+        void onSelected(String userDate);
     }
 
     public HomeFragmentAdapter(List<User> users) {
@@ -57,17 +58,17 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        int userId = users.get(position).getId();
-        viewHolder.recId.setText(Integer.toString(userId));
-        viewHolder.recfname.setText(users.get(position).getFirstName());
-        viewHolder.reclname.setText(users.get(position).getLastName());
-        viewHolder.recdelete.setOnClickListener(new View.OnClickListener() {
+        String userDate = users.get(position).getDate();
+        viewHolder.recDate.setText(userDate);
+        viewHolder.recFirstName.setText(users.get(position).getFirstName());
+        viewHolder.recLastName.setText(users.get(position).getLastName());
+        viewHolder.recDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AppDatabase database = AppDatabase.getInstance(view.getContext());
 
                 UserDao userDao = database.userDao();
-                userDao.deleteById(userId);
+                userDao.deleteByDate(userDate);
                 int pos = viewHolder.getAbsoluteAdapterPosition();
                 users.remove(pos);
                 notifyItemRemoved(pos);
@@ -78,7 +79,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
             public void onClick(View view) {
                 try {
                     OnListClicked listener = (OnListClicked) view.getContext();
-                    listener.onSelected(userId);
+                    listener.onSelected(userDate);
                 }
                 catch (ClassCastException e) {
                     return;

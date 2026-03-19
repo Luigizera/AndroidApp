@@ -1,12 +1,15 @@
 package com.ludas.testapp.database;
 
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.InvalidationTracker;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+
+import java.util.Locale;
 
 @Database(entities = {User.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
@@ -17,12 +20,16 @@ public abstract class AppDatabase extends RoomDatabase {
     public static synchronized AppDatabase getInstance(Context context) {
         if(instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    AppDatabase.class, "database-name")
+                    AppDatabase.class, "database-str")
                     .allowMainThreadQueries()
                     .build();
         }
         return instance;
     }
+    public static SimpleDateFormat getDateFormat() {
+            return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault());
+    }
+
     @NonNull
     @Override
     protected InvalidationTracker createInvalidationTracker() {

@@ -27,7 +27,6 @@ import com.ludas.testapp.fragments.SettingsFragment;
 public class MainActivity extends AppCompatActivity implements HomeFragmentAdapter.OnListClicked {
     public static final String TAG = "MainActivity";
     ActivityMainBinding binding;
-    String databaseName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentAdapt
                 replaceFragment(HomeFragment.newInstance(), HomeFragment.TAG);
             }
             if(itemId == R.id.bottom_nav_menu_profile) {
-                replaceFragment(ProfileFragment.newInstance(User.NULL_ID), ProfileFragment.TAG);
+                replaceFragment(ProfileFragment.newInstance(null), ProfileFragment.TAG);
             }
             if(itemId == R.id.bottom_nav_menu_settings) {
                 replaceFragment(SettingsFragment.newInstance(), SettingsFragment.TAG);
@@ -66,26 +65,26 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentAdapt
     private void addFragment(Fragment fragment, String tag) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.frame_layout, fragment, tag)
+                .add(R.id.activity_main_framelayout, fragment, tag)
                 .commit();
     }
 
     private void replaceFragment(Fragment fragment, String tag) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frame_layout, fragment, tag)
+                .replace(R.id.activity_main_framelayout, fragment, tag)
                 .commit();
     }
     private void replaceWithBackStack(Fragment fragment, String tag) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frame_layout, fragment, tag)
+                .replace(R.id.activity_main_framelayout, fragment, tag)
                 .addToBackStack(tag)
                 .commit();
     }
 
     @Override
-    public void onSelected(int userId) {
-        replaceWithBackStack(ProfileFragment.newInstance(userId), ProfileFragment.TAG);
+    public void onSelected(String userDate) {
+        replaceWithBackStack(ProfileFragment.newInstance(userDate), ProfileFragment.TAG);
     }
 }

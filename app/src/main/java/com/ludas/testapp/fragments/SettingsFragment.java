@@ -1,5 +1,6 @@
 package com.ludas.testapp.fragments;
 
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,10 @@ import com.ludas.testapp.database.AppDatabase;
 import com.ludas.testapp.database.User;
 import com.ludas.testapp.database.UserDao;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SettingsFragment#newInstance} factory method to
@@ -30,6 +35,7 @@ public class SettingsFragment extends Fragment {
     private Button submitButton;
 
     private AppDatabase database;
+    private SimpleDateFormat sdf;
 
     /**
      * Use this factory method to create a new instance of
@@ -62,21 +68,25 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         database = AppDatabase.getInstance(view.getContext());
-        firstName = view.findViewById(R.id.t5);
-        lastName = view.findViewById(R.id.t4);
-        submitButton = view.findViewById(R.id.submit_button);
+        sdf = AppDatabase.getDateFormat();
+        firstName = view.findViewById(R.id.fragment_settings_firstname);
+        lastName = view.findViewById(R.id.fragment_settings_secondname);
+        submitButton = view.findViewById(R.id.fragment_settings_submitbutton);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UserDao userDao = database.userDao();
+
                 if(firstName.getText().toString().isEmpty()) {
                     return;
                 }
                 if(lastName.getText().toString().isEmpty()) {
                     return;
                 }
-                userDao.insertAll(new User(firstName.getText().toString(), lastName.getText().toString()));
+                Date d = Calendar.getInstance().getTime();
+                String date = sdf.format(d);
+                userDao.insertAll(new User(date, firstName.getText().toString(), lastName.getText().toString()));
                 firstName.setText("");
                 lastName.setText("");
             }

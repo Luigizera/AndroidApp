@@ -28,7 +28,7 @@
                 android:textSize="26sp" />
 
             <EditText
-                android:id="@+id/t5"
+                android:id="@+id/fragment_settings_firstname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -37,7 +37,7 @@
                 android:padding="10dp" />
 
             <EditText
-                android:id="@+id/t4"
+                android:id="@+id/fragment_settings_secondname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -46,7 +46,7 @@
                 android:padding="10dp" />
 
             <Button
-                android:id="@+id/submit_button"
+                android:id="@+id/fragment_settings_submitbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

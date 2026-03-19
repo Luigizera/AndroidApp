@@ -15,17 +15,17 @@ import com.ludas.testapp.database.User;
 
 public class ProfileFragment extends Fragment {
     public static final String TAG = "ProfileFragment";
-    private static final String ARG_USERID = "userId";
-    private int userId;
+    private static final String ARG_USERDATE = "userDate";
+    private String userDate;
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
-    public static ProfileFragment newInstance(int userId) {
+    public static ProfileFragment newInstance(String userDate) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_USERID,userId);
+        args.putString(ARG_USERDATE, userDate);
         fragment.setArguments(args);
         return fragment;
     }
@@ -34,7 +34,7 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            userId = getArguments().getInt(ARG_USERID);
+            this.userDate = getArguments().getString(ARG_USERDATE);
         }
     }
 
@@ -43,9 +43,9 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        if(userId != User.NULL_ID) {
+        if(userDate != null) {
             TextView textView = view.findViewById(R.id.fragment_profile_textview);
-            textView.setText(Integer.toString(userId));
+            textView.setText(userDate);
         }
 
         return view;
