@@ -27,7 +27,7 @@ public abstract class AppDatabase extends RoomDatabase {
         return instance;
     }
     public static SimpleDateFormat getDateFormat() {
-            return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault());
+        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault());
     }
 
     @NonNull

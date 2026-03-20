@@ -20,6 +20,8 @@ import java.util.List;
 public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapter.ViewHolder> {
 
     private List<User> users;
+    private AppDatabase database;
+    private UserDao userDao;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         protected final TextView recDate;
@@ -30,7 +32,6 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
-
             recDate = (TextView) view.findViewById(R.id.singlerowdesign_recview_date);
             recFirstName = (TextView) view.findViewById(R.id.singlerowdesign_recview_firstName);
             recLastName = (TextView) view.findViewById(R.id.singlerowdesign_recview_lastName);
@@ -50,8 +51,9 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.singlerowdesign, viewGroup, false);
-
+                .inflate(R.layout.singlerowdesign2, viewGroup, false);
+        database = AppDatabase.getInstance(view.getContext());
+        userDao = database.userDao();
         return new ViewHolder(view);
     }
 
@@ -65,9 +67,6 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
         viewHolder.recDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppDatabase database = AppDatabase.getInstance(view.getContext());
-
-                UserDao userDao = database.userDao();
                 userDao.deleteByDate(userDate);
                 int pos = viewHolder.getAbsoluteAdapterPosition();
                 users.remove(pos);

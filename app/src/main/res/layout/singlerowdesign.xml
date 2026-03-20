@@ -18,7 +18,8 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="1"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:ellipsize="end"/>
 
         <TextView
             android:id="@+id/singlerowdesign_recview_firstName"
@@ -26,7 +27,8 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="First Name"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:ellipsize="end"/>
 
         <TextView
             android:id="@+id/singlerowdesign_recview_lastName"
@@ -34,7 +36,8 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="Last Name"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:ellipsize="end"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <ImageButton

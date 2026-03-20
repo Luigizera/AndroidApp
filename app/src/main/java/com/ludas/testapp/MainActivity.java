@@ -1,10 +1,6 @@
 package com.ludas.testapp;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,17 +8,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.room.Room;
 
-import com.ludas.testapp.database.AppDatabase;
-import com.ludas.testapp.database.User;
-import com.ludas.testapp.database.UserDao;
 import com.ludas.testapp.databinding.ActivityMainBinding;
 import com.ludas.testapp.fragments.HomeFragment;
 import com.ludas.testapp.fragments.ProfileFragment;
-import com.ludas.testapp.fragments.SettingsFragment;
+import com.ludas.testapp.fragments.InsertFragment;
 
 public class MainActivity extends AppCompatActivity implements HomeFragmentAdapter.OnListClicked {
     public static final String TAG = "MainActivity";
@@ -55,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentAdapt
                 replaceFragment(ProfileFragment.newInstance(null), ProfileFragment.TAG);
             }
             if(itemId == R.id.bottom_nav_menu_settings) {
-                replaceFragment(SettingsFragment.newInstance(), SettingsFragment.TAG);
+                replaceFragment(InsertFragment.newInstance(), InsertFragment.TAG);
             }
 
             return true;

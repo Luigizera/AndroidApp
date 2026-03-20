@@ -3,16 +3,14 @@ package com.ludas.testapp.fragments;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.ludas.testapp.R;
 import com.ludas.testapp.database.AppDatabase;
@@ -21,18 +19,18 @@ import com.ludas.testapp.database.UserDao;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SettingsFragment#newInstance} factory method to
+ * Use the {@link InsertFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SettingsFragment extends Fragment {
+public class InsertFragment extends Fragment {
 
     public static final String TAG = "SettingsFragment";
     private EditText firstName, lastName;
-    private Button submitButton;
+    private TextView textviewError;
+    private ImageButton submitButton;
 
     private AppDatabase database;
     private SimpleDateFormat sdf;
@@ -43,15 +41,15 @@ public class SettingsFragment extends Fragment {
      *
      * @return A new instance of fragment SettingsFragment.
      */
-    public static SettingsFragment newInstance() {
-        SettingsFragment fragment = new SettingsFragment();
+    public static InsertFragment newInstance() {
+        InsertFragment fragment = new InsertFragment();
         Bundle args = new Bundle();
         //args.putString(KEY_DATABASENAME, databaseName);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public SettingsFragment() {
+    public InsertFragment() {
         // Required empty public constructor
     }
 
@@ -66,10 +64,11 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_insert, container, false);
         database = AppDatabase.getInstance(view.getContext());
         sdf = AppDatabase.getDateFormat();
         firstName = view.findViewById(R.id.fragment_settings_firstname);
+        textviewError = view.findViewById(R.id.fragment_settings_textview_error);
         lastName = view.findViewById(R.id.fragment_settings_lastname);
         submitButton = view.findViewById(R.id.fragment_settings_submitbutton);
 
@@ -79,11 +78,16 @@ public class SettingsFragment extends Fragment {
                 UserDao userDao = database.userDao();
 
                 if(firstName.getText().toString().isEmpty()) {
+                    textviewError.setVisibility(View.VISIBLE);
+                    textviewError.setText(R.string.firstname_empty_error);
                     return;
                 }
                 if(lastName.getText().toString().isEmpty()) {
+                    textviewError.setVisibility(View.VISIBLE);
+                    textviewError.setText(R.string.lastname_empty_error);
                     return;
                 }
+                textviewError.setVisibility(View.INVISIBLE);
                 Date d = Calendar.getInstance().getTime();
                 String date = sdf.format(d);
                 userDao.insertAll(new User(date, firstName.getText().toString(), lastName.getText().toString()));
