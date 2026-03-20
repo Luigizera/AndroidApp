@@ -24,7 +24,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="64dp"
                 android:padding="16dp"
-                android:text="Settings Fragment"
+                android:text="Insert Fragment"
                 android:textSize="26sp" />
 
             <EditText
@@ -37,13 +37,15 @@
                 android:padding="10dp" />
 
             <EditText
-                android:id="@+id/fragment_settings_secondname"
+                android:id="@+id/fragment_settings_lastname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="220dp"
-                android:hint="@string/hint_second_name"
-                android:padding="10dp" />
+                android:hint="@string/hint_last_name"
+                android:padding="10dp"
+                android:inputType="textMultiLine"
+                android:ems="10"/>
 
             <Button
                 android:id="@+id/fragment_settings_submitbutton"
@@ -52,6 +54,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="300dp"
                 android:text="@string/submit_button" />
+
         </FrameLayout>
     </ScrollView>
 

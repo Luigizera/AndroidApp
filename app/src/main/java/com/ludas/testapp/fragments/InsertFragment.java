@@ -70,7 +70,7 @@ public class SettingsFragment extends Fragment {
         database = AppDatabase.getInstance(view.getContext());
         sdf = AppDatabase.getDateFormat();
         firstName = view.findViewById(R.id.fragment_settings_firstname);
-        lastName = view.findViewById(R.id.fragment_settings_secondname);
+        lastName = view.findViewById(R.id.fragment_settings_lastname);
         submitButton = view.findViewById(R.id.fragment_settings_submitbutton);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
