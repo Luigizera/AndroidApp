@@ -3,9 +3,13 @@
     <string name="hint_first_name">First Name</string>
     <string name="hint_last_name">Last Name</string>
     <string name="submit_button">Submit</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_fragment_home">Home</string>
+    <string name="title_fragment_insert">Insert</string>
+    <string name="title_fragment_profile">Profile</string>
     <string name="delete">delete</string>
     <string name="firstname_empty_error">First Name is empty</string>
     <string name="lastname_empty_error">Last Name is empty</string>
+    <string name="bottom_nav_menu_home">Home</string>
+    <string name="bottom_nav_menu_profile">Profile</string>
+    <string name="bottom_nav_menu_settings">Settings</string>
 </resources>
