@@ -1,7 +1,6 @@
 package com.ludas.testapp;
 
 import android.annotation.SuppressLint;
-import android.icu.util.Calendar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +50,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.singlerowdesign2, viewGroup, false);
+                .inflate(R.layout.singlerowdesign, viewGroup, false);
         database = AppDatabase.getInstance(view.getContext());
         userDao = database.userDao();
         return new ViewHolder(view);

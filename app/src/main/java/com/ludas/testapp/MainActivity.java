@@ -1,24 +1,27 @@
 package com.ludas.testapp;
 
 import android.os.Bundle;
+import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.ludas.testapp.databinding.ActivityMainBinding;
 import com.ludas.testapp.fragments.HomeFragment;
 import com.ludas.testapp.fragments.ProfileFragment;
 import com.ludas.testapp.fragments.InsertFragment;
+import com.ludas.testapp.fragments.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity implements HomeFragmentAdapter.OnListClicked {
     public static final String TAG = "MainActivity";
     ActivityMainBinding binding;
-    Toolbar toolbar;
+    MaterialToolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,28 +36,30 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentAdapt
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        toolbar = findViewById(R.id.activity_main_toolbar);
-        setSupportActionBar(toolbar);
         if(savedInstanceState == null) {
             addFragment(HomeFragment.newInstance(), HomeFragment.TAG);
-            toolbar.setTitle(R.string.title_fragment_home);
         }
-        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+        binding.activityMainBottomnavview.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
             if (itemId == R.id.bottom_nav_menu_home) {
                 replaceFragment(HomeFragment.newInstance(), HomeFragment.TAG);
-                toolbar.setTitle(R.string.title_fragment_home);
             }
             if(itemId == R.id.bottom_nav_menu_profile) {
                 replaceFragment(ProfileFragment.newInstance(null), ProfileFragment.TAG);
-                toolbar.setTitle(R.string.title_fragment_profile);
             }
-            if(itemId == R.id.bottom_nav_menu_settings) {
+            if(itemId == R.id.bottom_nav_menu_add) {
                 replaceFragment(InsertFragment.newInstance(), InsertFragment.TAG);
-                toolbar.setTitle(R.string.title_fragment_insert);
             }
 
+            return true;
+        });
+        binding.activityMainAppbarlayoutToolbar.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+
+            if(itemId == R.id.top_nav_menu_settings) {
+                replaceFragment(SettingsFragment.newInstance(), SettingsFragment.TAG);
+            }
             return true;
         });
     }
@@ -83,6 +88,5 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentAdapt
     @Override
     public void onSelected(String userDate) {
         replaceWithBackStack(ProfileFragment.newInstance(userDate), ProfileFragment.TAG);
-        toolbar.setTitle(R.string.title_fragment_profile);
     }
 }

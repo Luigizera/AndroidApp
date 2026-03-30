@@ -11,5 +11,6 @@
     <string name="lastname_empty_error">Last Name is empty</string>
     <string name="bottom_nav_menu_home">Home</string>
     <string name="bottom_nav_menu_profile">Profile</string>
-    <string name="bottom_nav_menu_settings">Settings</string>
+    <string name="bottom_nav_menu_add">Add</string>
+    <string name="top_nav_menu_settings">Settings</string>
 </resources>

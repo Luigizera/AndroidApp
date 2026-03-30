@@ -28,7 +28,7 @@ import java.util.Date;
  */
 public class InsertFragment extends Fragment {
 
-    public static final String TAG = "SettingsFragment";
+    public static final String TAG = "InsertFragment";
     private EditText firstName, lastName;
     private TextView textviewError;
     private ImageButton submitButton;
