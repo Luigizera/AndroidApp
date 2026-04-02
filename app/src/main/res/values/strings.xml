@@ -7,10 +7,19 @@
     <string name="title_fragment_insert">Insert</string>
     <string name="title_fragment_profile">Profile</string>
     <string name="delete">delete</string>
-    <string name="firstname_empty_error">First Name is empty</string>
-    <string name="lastname_empty_error">Last Name is empty</string>
+    <string name="error_empty_firstname">First Name is empty</string>
+    <string name="error_empty_lastname">Last Name is empty</string>
+    <string name="category_error_empty_name">Name is empty</string>
+    <string name="category_error_already_exists">Name already exist</string>
     <string name="bottom_nav_menu_home">Home</string>
     <string name="bottom_nav_menu_profile">Profile</string>
     <string name="bottom_nav_menu_add">Add</string>
     <string name="top_nav_menu_settings">Settings</string>
+    <string name="left_nav_menu_test">Test</string>
+    <string name="left_nav_menu_category">Category</string>
+    <string name="left_nav_menu_home">Home</string>
+    <string name="left_nav_menu_add">Add</string>
+    <string name="left_nav_menu_profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

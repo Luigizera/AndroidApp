@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?attr/colorSecondary"
-    tools:context=".fragments.HomeFragment">
+    tools:context=".fragments.CategoryFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_home_recview"
+        android:id="@+id/fragment_category_recview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/singlerowdesign" />
+        tools:listitem="@layout/category_list" />
 
 </LinearLayout>

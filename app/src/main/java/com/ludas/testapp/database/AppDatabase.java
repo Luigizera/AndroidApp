@@ -9,13 +9,16 @@ import androidx.room.InvalidationTracker;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
-@Database(entities = {User.class}, version = 1)
+@Database(entities = {User.class, Category.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
     public abstract UserDao userDao();
+    public abstract CategoryDao categoryDao();
 
     public static synchronized AppDatabase getInstance(Context context) {
         if(instance == null) {
@@ -28,6 +31,11 @@ public abstract class AppDatabase extends RoomDatabase {
     }
     public static SimpleDateFormat getDateFormat() {
         return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault());
+    }
+
+    public static String getCurrentDate() {
+        Date d = Calendar.getInstance().getTime();
+        return getDateFormat().format(d);
     }
 
     @NonNull

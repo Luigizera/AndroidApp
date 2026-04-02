@@ -19,9 +19,8 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE date IN (:date)")
     User findByDate(String date);
 
-    @Query("SELECT * FROM users WHERE first_name LIKE :first AND " +
-            "last_name LIKE :last LIMIT 1")
-    User findByName(String first, String last);
+    @Query("SELECT * FROM users WHERE first_name LIKE :first AND last_name LIKE :last")
+    List<User> findByName(String first, String last);
 
     @Query("DELETE FROM users WHERE date IN (:date)")
     void deleteByDate(String date);

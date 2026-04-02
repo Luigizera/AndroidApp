@@ -7,9 +7,6 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "users")
 public class User {
-    /*@PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    private int id;*/
     @PrimaryKey(autoGenerate = false)
     @NonNull
     @ColumnInfo(name = "date")
@@ -20,8 +17,8 @@ public class User {
     @ColumnInfo(name = "last_name")
     private String lastName;
 
-    public User(String date, String firstName, String lastName) {
-        this.date = date;
+    public User(String firstName, String lastName) {
+        this.date = AppDatabase.getCurrentDate();
         this.firstName = firstName;
         this.lastName = lastName;
     }
