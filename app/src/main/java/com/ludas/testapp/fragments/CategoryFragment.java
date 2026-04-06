@@ -10,14 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ludas.testapp.CategoryFragmentAdapter;
-import com.ludas.testapp.HomeFragmentAdapter;
+import com.ludas.testapp.adapters.CategoryFragmentAdapter;
 import com.ludas.testapp.R;
 import com.ludas.testapp.database.AppDatabase;
 import com.ludas.testapp.database.Category;
 import com.ludas.testapp.database.CategoryDao;
-import com.ludas.testapp.database.User;
-import com.ludas.testapp.database.UserDao;
 
 import java.util.List;
 

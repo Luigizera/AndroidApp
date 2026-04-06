@@ -1,5 +1,7 @@
 package com.ludas.testapp.database;
 
+import android.database.Cursor;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -13,13 +15,13 @@ public interface CategoryDao {
     @Query("SELECT * FROM categories")
     List<Category> getAll();
 
-    @Query("SELECT * FROM categories WHERE id IN (:ids)")
+    @Query("SELECT * FROM categories WHERE id_category IN (:ids)")
     List<Category> loadAllByIds(long[] ids);
 
-    @Query("DELETE FROM categories WHERE id IN (:id)")
+    @Query("DELETE FROM categories WHERE id_category IN (:id)")
     void deleteById(long id);
 
-    @Query("SELECT * FROM categories WHERE id = :id")
+    @Query("SELECT * FROM categories WHERE id_category = :id")
     Category findById(long id);
 
     @Query("SELECT * FROM categories WHERE name LIKE :name")

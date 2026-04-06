@@ -15,11 +15,17 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
+import com.ludas.testapp.adapters.CategoryFragmentAdapter;
+import com.ludas.testapp.adapters.HomeFragmentAdapter;
+import com.ludas.testapp.adapters.ProductFragmentAdapter;
 import com.ludas.testapp.databinding.ActivityMainBinding;
 import com.ludas.testapp.fragments.CategoryFragment;
 import com.ludas.testapp.fragments.CategoryInfoFragment;
 import com.ludas.testapp.fragments.CategoryInsertFragment;
 import com.ludas.testapp.fragments.HomeFragment;
+import com.ludas.testapp.fragments.ProductFragment;
+import com.ludas.testapp.fragments.ProductInfoFragment;
+import com.ludas.testapp.fragments.ProductInsertFragment;
 import com.ludas.testapp.fragments.ProfileFragment;
 import com.ludas.testapp.fragments.InsertFragment;
 import com.ludas.testapp.fragments.SettingsFragment;
@@ -27,7 +33,7 @@ import com.ludas.testapp.fragments.SettingsFragment;
 
 
 public class MainActivity extends AppCompatActivity implements
-        HomeFragmentAdapter.OnListClicked, CategoryFragmentAdapter.OnListClicked {
+        HomeFragmentAdapter.OnListClicked, CategoryFragmentAdapter.OnListClicked, ProductFragmentAdapter.OnListClicked {
     public static final String TAG = "MainActivity";
     ActivityMainBinding binding;
     DrawerLayout drawerLayout;
@@ -107,6 +113,16 @@ public class MainActivity extends AppCompatActivity implements
                     replaceFragment(CategoryInsertFragment.newInstance(), CategoryInsertFragment.TAG);
                 }
 
+                if (itemId == R.id.left_nav_menu_product_home) {
+                    replaceFragment(ProductFragment.newInstance(), ProductFragment.TAG);
+                }
+                if(itemId == R.id.left_nav_menu_product_info) {
+                    replaceFragment(ProductInfoFragment.newInstance(-1), ProductInfoFragment.TAG);
+                }
+                if(itemId == R.id.left_nav_menu_product_add) {
+                    replaceFragment(ProductInsertFragment.newInstance(), ProductInsertFragment.TAG);
+                }
+
                 if(drawerLayout.isDrawerOpen(leftNavigationView)) {
                     drawerLayout.closeDrawer(leftNavigationView);
                 }
@@ -152,5 +168,10 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onCategorySelected(long categoryId) {
         replaceWithBackStack(CategoryInfoFragment.newInstance(categoryId), CategoryInfoFragment.TAG);
+    }
+
+    @Override
+    public void onProductSelected(long productId) {
+        replaceWithBackStack(ProductInfoFragment.newInstance(productId), ProductInfoFragment.TAG);
     }
 }

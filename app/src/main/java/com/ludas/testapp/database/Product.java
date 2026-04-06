@@ -13,8 +13,8 @@ import androidx.room.PrimaryKey;
 })
 public class Product {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    private long id;
+    @ColumnInfo(name = "id_product")
+    private long id_product;
 
     @ColumnInfo(name = "name")
     private String name;
@@ -34,12 +34,12 @@ public class Product {
         this.id_category = id_category;
     }
 
-    public long getId() {
-        return id;
+    public long getId_product() {
+        return id_product;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setId_product(long id_product) {
+        this.id_product = id_product;
     }
 
     public String getName() {

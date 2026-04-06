@@ -1,4 +1,4 @@
-package com.ludas.testapp;
+package com.ludas.testapp.adapters;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -10,64 +10,66 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ludas.testapp.R;
 import com.ludas.testapp.database.AppDatabase;
-import com.ludas.testapp.database.Category;
-import com.ludas.testapp.database.CategoryDao;
 import com.ludas.testapp.database.User;
 import com.ludas.testapp.database.UserDao;
 
 import java.util.List;
 
-public class CategoryFragmentAdapter extends RecyclerView.Adapter<CategoryFragmentAdapter.ViewHolder> {
+public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapter.ViewHolder> {
 
-    private List<Category> categories;
+    private List<User> users;
     private AppDatabase database;
-    private CategoryDao categoryDao;
+    private UserDao userDao;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        protected final TextView recId;
-        protected final TextView recName;
+        protected final TextView recDate;
+        protected final TextView recFirstName;
+        protected final TextView recLastName;
         protected final ImageButton recDelete;
 
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
-            recId = (TextView) view.findViewById(R.id.category_recview_id);
-            recName = (TextView) view.findViewById(R.id.category_recview_name);
-            recDelete = (ImageButton) view.findViewById(R.id.category_recview_delete);
+            recDate = (TextView) view.findViewById(R.id.singlerowdesign_recview_date);
+            recFirstName = (TextView) view.findViewById(R.id.singlerowdesign_recview_firstName);
+            recLastName = (TextView) view.findViewById(R.id.singlerowdesign_recview_lastName);
+            recDelete = (ImageButton) view.findViewById(R.id.singlerowdesign_recview_delete);
         }
     }
 
     public interface OnListClicked {
-        void onCategorySelected(long categoryId);
+        void onSelected(String userDate);
     }
 
-    public CategoryFragmentAdapter(List<Category> categories) {
-        this.categories = categories;
+    public HomeFragmentAdapter(List<User> users) {
+        this.users = users;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.category_list, viewGroup, false);
+                .inflate(R.layout.singlerowdesign, viewGroup, false);
         database = AppDatabase.getInstance(view.getContext());
-        categoryDao = database.categoryDao();
+        userDao = database.userDao();
         return new ViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        long categoryId = categories.get(position).getId();
-        viewHolder.recId.setText(String.valueOf(categoryId));
-        viewHolder.recName.setText(categories.get(position).getName());
+        String userDate = users.get(position).getDate();
+        viewHolder.recDate.setText(userDate);
+        viewHolder.recFirstName.setText(users.get(position).getFirstName());
+        viewHolder.recLastName.setText(users.get(position).getLastName());
         viewHolder.recDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                categoryDao.deleteById(categoryId);
+                userDao.deleteByDate(userDate);
                 int pos = viewHolder.getAbsoluteAdapterPosition();
-                categories.remove(pos);
+                users.remove(pos);
                 notifyItemRemoved(pos);
             }
         });
@@ -76,7 +78,7 @@ public class CategoryFragmentAdapter extends RecyclerView.Adapter<CategoryFragme
             public void onClick(View view) {
                 try {
                     OnListClicked listener = (OnListClicked) view.getContext();
-                    listener.onCategorySelected(categoryId);
+                    listener.onSelected(userDate);
                 }
                 catch (ClassCastException e) {
                     return;
@@ -87,6 +89,6 @@ public class CategoryFragmentAdapter extends RecyclerView.Adapter<CategoryFragme
 
     @Override
     public int getItemCount() {
-        return categories.size();
+        return users.size();
     }
 }

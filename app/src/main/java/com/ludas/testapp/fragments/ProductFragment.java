@@ -3,21 +3,34 @@ package com.ludas.testapp.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ludas.testapp.R;
+import com.ludas.testapp.adapters.ProductFragmentAdapter;
+import com.ludas.testapp.database.AppDatabase;
+import com.ludas.testapp.database.Product;
+import com.ludas.testapp.database.ProductDao;
+
+import java.util.List;
 
 public class ProductFragment extends Fragment {
 
     public static final String TAG = "ProductFragment";
+    private RecyclerView recyclerView;
+    private AppDatabase database;
+    private ProductDao productDao;
+    private List<Product> products;
+    private ProductFragmentAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     public ProductFragment() {
         // Required empty public constructor
     }
-
     public static ProductFragment newInstance() {
         ProductFragment fragment = new ProductFragment();
         Bundle args = new Bundle();
@@ -28,12 +41,20 @@ public class ProductFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        database = AppDatabase.getInstance(getActivity());
+        productDao = database.productDao();
+        products = productDao.getAll();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product, container, false);
+        View view = inflater.inflate(R.layout.fragment_product, container, false);
+        recyclerView = view.findViewById(R.id.fragment_product_recview);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new ProductFragmentAdapter(products);
+        recyclerView.setAdapter(adapter);
+        return view;
     }
 }

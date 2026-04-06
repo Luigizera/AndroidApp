@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "categories")
 public class Category {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    private long id;
+    @ColumnInfo(name = "id_category")
+    private long id_category;
 
     @ColumnInfo(name = "name")
     private String name;
@@ -25,11 +25,17 @@ public class Category {
         this.name = name;
     }
 
-    public long getId() {
-        return id;
+    public long getId_category() {
+        return id_category;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setId_category(long id_category) {
+        this.id_category = id_category;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
     }
 }

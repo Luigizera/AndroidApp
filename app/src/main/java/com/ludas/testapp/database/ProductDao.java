@@ -13,13 +13,13 @@ public interface ProductDao {
     @Query("SELECT * FROM products")
     List<Product> getAll();
 
-    @Query("SELECT * FROM products WHERE id IN (:ids)")
+    @Query("SELECT * FROM products WHERE id_product IN (:ids)")
     List<Product> loadAllByIds(long[] ids);
 
-    @Query("DELETE FROM products WHERE id IN (:id)")
+    @Query("DELETE FROM products WHERE id_product IN (:id)")
     void deleteById(long id);
 
-    @Query("SELECT * FROM products WHERE id = :id")
+    @Query("SELECT * FROM products WHERE id_product = :id")
     Product findById(long id);
 
     @Query("SELECT * FROM products WHERE name LIKE :name")
