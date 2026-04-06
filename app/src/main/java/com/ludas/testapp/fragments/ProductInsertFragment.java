@@ -36,9 +36,9 @@ public class ProductInsertFragment extends Fragment {
     private TextView textviewError;
     private ImageButton submitButton;
     private AppDatabase database;
-    private CategoryDao categoryDao;
+    private List<Category> list;
+    private ProductDao productDao;
     private ArrayAdapter<Category> spinnerAdapter;
-    private Cursor cursor;
 
     public ProductInsertFragment() {
         // Required empty public constructor
@@ -55,7 +55,13 @@ public class ProductInsertFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         database = AppDatabase.getInstance(getActivity());
-        categoryDao = database.categoryDao();
+        list = database.categoryDao().getAll();
+        productDao = database.productDao();
+        spinnerAdapter = new ArrayAdapter<>(
+                getActivity(),
+                android.R.layout.simple_spinner_item,
+                list
+        );
     }
 
     @Override
@@ -65,11 +71,14 @@ public class ProductInsertFragment extends Fragment {
         name = view.findViewById(R.id.fragment_product_insert_name);
         description = view.findViewById(R.id.fragment_product_insert_description);
         price = view.findViewById(R.id.fragment_product_insert_price);
+        spinnerCategory = view.findViewById(R.id.fragment_product_insert_id_category);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(spinnerAdapter);
+
         //TODO: FIX
-        new Thread(() -> {
-            List<Category> list = categoryDao.getAll();
-            setupSpinner(view, list);
-        }).start();
+        /*new Thread(() -> {
+
+        }).start();*/
 
         textviewError = view.findViewById(R.id.fragment_product_insert_textview_error);
         submitButton = view.findViewById(R.id.fragment_product_insert_submitbutton);
@@ -77,51 +86,37 @@ public class ProductInsertFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProductDao productDao = database.productDao();
-                //TODO: create Strings
                 if(name.getText().toString().isEmpty()) {
                     textviewError.setVisibility(View.VISIBLE);
-                    textviewError.setText(R.string.category_error_empty_name);
+                    textviewError.setText(R.string.error_empty_name);
                     return;
                 }
                 if(description.getText().toString().isEmpty()) {
                     textviewError.setVisibility(View.VISIBLE);
-                    textviewError.setText(R.string.category_error_empty_name);
+                    textviewError.setText(R.string.error_empty_description);
                     return;
                 }
                 if(price.getText().toString().isEmpty()) {
                     textviewError.setVisibility(View.VISIBLE);
-                    textviewError.setText(R.string.category_error_empty_name);
+                    textviewError.setText(R.string.error_empty_price);
                     return;
                 }
                 if(spinnerCategory.getSelectedItem() == null) {
                     textviewError.setVisibility(View.VISIBLE);
-                    textviewError.setText(R.string.category_error_empty_name);
+                    textviewError.setText(R.string.error_empty_category_spinner);
                     return;
                 }
                 Category selectedValue = (Category) spinnerCategory.getSelectedItem();
                 textviewError.setVisibility(View.INVISIBLE);
-                productDao.insertAll(new Product(name.getText().toString(), description.getText().toString(), Double.parseDouble(price.getText().toString()), selectedValue.getId_category()));
+                productDao.insertAll(new Product(name.getText().toString(),
+                        description.getText().toString(),
+                        Double.parseDouble(price.getText().toString()),
+                        selectedValue.getId_category()));
                 name.setText("");
                 description.setText("");
                 price.setText("");
             }
         });
         return view;
-    }
-
-    private void setupSpinner(View view, List<Category> list) {
-
-        spinnerCategory = view.findViewById(R.id.fragment_product_insert_id_category);
-
-        spinnerAdapter = new ArrayAdapter<>(
-                view.getContext(),
-                android.R.layout.simple_spinner_item,
-                list
-        );
-
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinnerCategory.setAdapter(spinnerAdapter);
     }
 }

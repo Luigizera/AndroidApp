@@ -59,7 +59,7 @@ public class CategoryInsertFragment extends Fragment {
 
                 if(name.getText().toString().isEmpty()) {
                     textviewError.setVisibility(View.VISIBLE);
-                    textviewError.setText(R.string.category_error_empty_name);
+                    textviewError.setText(R.string.error_empty_name);
                     return;
                 }
                 if(categoryDao.findByNameEquals(name.getText().toString()) != null) {
