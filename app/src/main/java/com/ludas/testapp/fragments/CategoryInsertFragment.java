@@ -20,10 +20,10 @@ import com.ludas.testapp.database.User;
 public class CategoryInsertFragment extends Fragment {
     public static final String TAG = "CategoryInsertFragment";
 
-    private EditText name;
-    private TextView textviewError;
-    private ImageButton submitButton;
-    private AppDatabase database;
+    private EditText editTextName;
+    private TextView textViewError;
+    private ImageButton imageButtonSubmit;
+    private CategoryDao categoryDao;
 
     public CategoryInsertFragment() {
         // Required empty public constructor
@@ -39,7 +39,7 @@ public class CategoryInsertFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        database = AppDatabase.getInstance(getActivity());
+        categoryDao = AppDatabase.getInstance(getActivity()).categoryDao();
 
     }
 
@@ -48,28 +48,26 @@ public class CategoryInsertFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_category_insert, container, false);
-        name = view.findViewById(R.id.fragment_category_insert_name);
-        textviewError = view.findViewById(R.id.fragment_category_insert_textview_error);
-        submitButton = view.findViewById(R.id.fragment_category_insert_submitbutton);
+        editTextName = view.findViewById(R.id.fragment_category_insert_name);
+        textViewError = view.findViewById(R.id.fragment_category_insert_textview_error);
+        imageButtonSubmit = view.findViewById(R.id.fragment_category_insert_submitbutton);
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        imageButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CategoryDao categoryDao = database.categoryDao();
-
-                if(name.getText().toString().isEmpty()) {
-                    textviewError.setVisibility(View.VISIBLE);
-                    textviewError.setText(R.string.error_empty_name);
+                if(editTextName.getText().toString().isEmpty()) {
+                    textViewError.setVisibility(View.VISIBLE);
+                    textViewError.setText(R.string.error_empty_name);
                     return;
                 }
-                if(categoryDao.findByNameEquals(name.getText().toString()) != null) {
-                    textviewError.setVisibility(View.VISIBLE);
-                    textviewError.setText(R.string.category_error_already_exists);
+                if(categoryDao.findByNameEquals(editTextName.getText().toString()) != null) {
+                    textViewError.setVisibility(View.VISIBLE);
+                    textViewError.setText(R.string.category_error_already_exists);
                     return;
                 }
-                textviewError.setVisibility(View.INVISIBLE);
-                categoryDao.insertAll(new Category(name.getText().toString()));
-                name.setText("");
+                textViewError.setVisibility(View.INVISIBLE);
+                categoryDao.insertAll(new Category(editTextName.getText().toString()));
+                editTextName.setText("");
             }
         });
         return view;

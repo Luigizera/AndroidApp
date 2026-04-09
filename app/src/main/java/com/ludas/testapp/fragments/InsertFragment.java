@@ -16,15 +16,10 @@ import com.ludas.testapp.database.AppDatabase;
 import com.ludas.testapp.database.User;
 import com.ludas.testapp.database.UserDao;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link InsertFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class InsertFragment extends Fragment {
 
     public static final String TAG = "InsertFragment";
-    private EditText firstName, lastName;
+    private EditText editTextFirstName, editTextLastName;
     private TextView textviewError;
     private ImageButton submitButton;
 
@@ -51,9 +46,9 @@ public class InsertFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_insert, container, false);
-        firstName = view.findViewById(R.id.fragment_settings_firstname);
+        editTextFirstName = view.findViewById(R.id.fragment_settings_firstname);
+        editTextLastName = view.findViewById(R.id.fragment_settings_lastname);
         textviewError = view.findViewById(R.id.fragment_settings_textview_error);
-        lastName = view.findViewById(R.id.fragment_settings_lastname);
         submitButton = view.findViewById(R.id.fragment_settings_submitbutton);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -61,20 +56,20 @@ public class InsertFragment extends Fragment {
             public void onClick(View v) {
                 UserDao userDao = database.userDao();
 
-                if(firstName.getText().toString().isEmpty()) {
+                if(editTextFirstName.getText().toString().isEmpty()) {
                     textviewError.setVisibility(View.VISIBLE);
                     textviewError.setText(R.string.error_empty_firstname);
                     return;
                 }
-                if(lastName.getText().toString().isEmpty()) {
+                if(editTextLastName.getText().toString().isEmpty()) {
                     textviewError.setVisibility(View.VISIBLE);
                     textviewError.setText(R.string.error_empty_lastname);
                     return;
                 }
                 textviewError.setVisibility(View.INVISIBLE);
-                userDao.insertAll(new User(firstName.getText().toString(), lastName.getText().toString()));
-                firstName.setText("");
-                lastName.setText("");
+                userDao.insertAll(new User(editTextFirstName.getText().toString(), editTextLastName.getText().toString()));
+                editTextFirstName.setText("");
+                editTextLastName.setText("");
             }
         });
         return view;
