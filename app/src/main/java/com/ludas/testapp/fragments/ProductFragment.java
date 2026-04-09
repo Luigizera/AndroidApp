@@ -2,7 +2,9 @@ package com.ludas.testapp.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -55,6 +57,21 @@ public class ProductFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new ProductFragmentAdapter(products);
         recyclerView.setAdapter(adapter);
+        getParentFragmentManager().setFragmentResultListener("request_key",
+                getViewLifecycleOwner(),
+                new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+                        boolean result = bundle.getBoolean("refresh_key");
+                        if(result) {
+                            getParentFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.activity_main_framelayout, ProductFragment.newInstance())
+                                    .commit();
+                        }
+                    }
+                }
+        );
         return view;
     }
 }

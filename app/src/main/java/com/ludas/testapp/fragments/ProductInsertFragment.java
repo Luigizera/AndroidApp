@@ -29,13 +29,10 @@ public class ProductInsertFragment extends Fragment {
 
     public static final String TAG = "ProductInsertFragment";
 
-    private EditText name;
-    private EditText description;
-    private EditText price;
+    private EditText name, description, price;
     private Spinner spinnerCategory;
     private TextView textviewError;
-    private ImageButton submitButton;
-    private AppDatabase database;
+    private ImageButton imageButtonSubmit;
     private List<Category> list;
     private ProductDao productDao;
     private ArrayAdapter<Category> spinnerAdapter;
@@ -54,7 +51,7 @@ public class ProductInsertFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        database = AppDatabase.getInstance(getActivity());
+        AppDatabase database = AppDatabase.getInstance(getActivity());
         list = database.categoryDao().getAll();
         productDao = database.productDao();
         spinnerAdapter = new ArrayAdapter<>(
@@ -75,15 +72,10 @@ public class ProductInsertFragment extends Fragment {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(spinnerAdapter);
 
-        //TODO: FIX
-        /*new Thread(() -> {
-
-        }).start();*/
-
         textviewError = view.findViewById(R.id.fragment_product_insert_textview_error);
-        submitButton = view.findViewById(R.id.fragment_product_insert_submitbutton);
+        imageButtonSubmit = view.findViewById(R.id.fragment_product_insert_submitbutton);
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        imageButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(name.getText().toString().isEmpty()) {

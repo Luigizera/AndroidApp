@@ -20,7 +20,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="32dp"
             android:padding="0dp"
-            android:text="Sample Text"
+            android:text="@string/sample_text"
             android:textColor="?attr/colorError"
             android:textSize="20sp"
             android:visibility="invisible"
@@ -30,14 +30,14 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/fragment_product_insert_name"
-            android:autofillHints="product name"
+            android:autofillHints="@string/hint_product_name"
             android:inputType="textMultiLine"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="48dp"
-            android:hint="Product Name"
+            android:hint="@string/hint_product_name"
             android:textColorHint="?attr/colorPrimary"
             android:textColor="?attr/colorPrimary"
             app:backgroundTint="?attr/colorPrimary"
@@ -47,12 +47,12 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/fragment_product_insert_description"
-            android:autofillHints="product description"
+            android:autofillHints="@string/hint_product_description"
             android:inputType="textMultiLine"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Product Description"
+            android:hint="@string/hint_product_description"
             android:textColorHint="?attr/colorPrimary"
             android:textColor="?attr/colorPrimary"
             android:layout_marginTop="48dp"
@@ -65,12 +65,12 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/fragment_product_insert_price"
-            android:autofillHints="product price"
+            android:autofillHints="@string/hint_product_price"
             android:inputType="numberDecimal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Product Price"
+            android:hint="@string/hint_product_price"
             android:textColorHint="?attr/colorPrimary"
             android:textColor="?attr/colorPrimary"
             android:layout_marginTop="48dp"
@@ -84,12 +84,12 @@
         
         <Spinner
             android:id="@+id/fragment_product_insert_id_category"
-            android:autofillHints="product category"
+            android:autofillHints="@string/hint_product_category"
             android:inputType="numberDecimal"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:ems="10"
-            android:hint="Product Category"
+            android:hint="@string/hint_product_category"
             android:textColorHint="?attr/colorPrimary"
             android:textColor="?attr/colorPrimary"
             android:layout_marginTop="48dp"
@@ -99,7 +99,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_product_insert_price" />
-            />
 
         <ImageButton
             android:id="@+id/fragment_product_insert_submitbutton"

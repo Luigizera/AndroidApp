@@ -12,6 +12,7 @@
     <string name="error_empty_name">Name is empty</string>
     <string name="error_empty_description">Description is empty</string>
     <string name="error_empty_price">Price is empty</string>
+    <string name="error_convert_price">Price is not a number</string>
     <string name="error_empty_category_spinner">Category is empty</string>
     <string name="category_error_already_exists">Name already exist</string>
     <string name="bottom_nav_menu_home">Home</string>
@@ -24,6 +25,11 @@
     <string name="left_nav_menu_add">Add</string>
     <string name="left_nav_menu_profile">Profile</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sample_text">Sample Text</string>
     <string name="left_nav_menu_product">Product</string>
+    <string name="hint_category_name">Category Name</string>
+    <string name="hint_product_name">Product Name</string>
+    <string name="hint_product_description">Product Description</string>
+    <string name="hint_product_price">Product Price</string>
+    <string name="hint_product_category">Product Category</string>
 </resources>

@@ -5,6 +5,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity(tableName = "products", foreignKeys = {@ForeignKey(entity = Category.class,
         parentColumns = "id_category",
         childColumns = "id_category",
@@ -72,5 +74,17 @@ public class Product {
 
     public void setId_category(long id_category) {
         this.id_category = id_category;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return id_product == product.id_product && Double.compare(price, product.price) == 0 && id_category == product.id_category && Objects.equals(name, product.name) && Objects.equals(description, product.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id_product, name, description, price, id_category);
     }
 }

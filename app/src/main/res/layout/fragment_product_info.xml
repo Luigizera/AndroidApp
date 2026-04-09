@@ -1,15 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="?attr/colorSecondary"
     tools:context=".fragments.ProductInfoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/product_info_textview"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/fragment_product_info_textview_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:padding="0dp"
+            android:text="@string/sample_text"
+            android:textColor="?attr/colorError"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fragment_product_info_name"
+            android:autofillHints="@string/hint_product_name"
+            android:inputType="textMultiLine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="48dp"
+            android:hint="@string/hint_product_name"
+            android:textColorHint="?attr/colorPrimary"
+            android:textColor="?attr/colorPrimary"
+            app:backgroundTint="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_textview_error" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fragment_product_info_description"
+            android:autofillHints="@string/hint_product_description"
+            android:inputType="textMultiLine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/hint_product_description"
+            android:textColorHint="?attr/colorPrimary"
+            android:textColor="?attr/colorPrimary"
+            android:layout_marginTop="48dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            app:backgroundTint="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_name" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fragment_product_info_price"
+            android:autofillHints="@string/hint_product_price"
+            android:inputType="numberDecimal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/hint_product_price"
+            android:textColorHint="?attr/colorPrimary"
+            android:textColor="?attr/colorPrimary"
+            android:layout_marginTop="48dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            app:backgroundTint="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_description" />
+
+
+        <Spinner
+            android:id="@+id/fragment_product_info_id_category"
+            android:autofillHints="@string/hint_product_category"
+            android:inputType="numberDecimal"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:ems="10"
+            android:hint="@string/hint_product_category"
+            android:textColorHint="?attr/colorPrimary"
+            android:textColor="?attr/colorPrimary"
+            android:layout_marginTop="48dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            app:backgroundTint="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_price" />
+
+        <ImageButton
+            android:id="@+id/fragment_product_info_submitbutton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:layout_marginTop="373dp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="?attr/colorPrimary"
+            android:contentDescription="@string/submit_button"
+            android:scaleType="center"
+            android:src="@drawable/baseline_edit_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_id_category" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
