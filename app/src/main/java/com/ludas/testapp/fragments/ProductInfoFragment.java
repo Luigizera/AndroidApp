@@ -30,10 +30,10 @@ public class ProductInfoFragment extends Fragment {
     private EditText editTextName, editTextDescription, editTextPrice;
     private TextView textViewError;
     private ImageButton imageButtonSubmit;
-    private List<Category> list;
+    private Product product;
     private ProductDao productDao;
     private Category productCategory;
-    private Product product;
+    private List<Category> list;
     private Spinner spinnerCategory;
     private ArrayAdapter<Category> spinnerAdapter;
 

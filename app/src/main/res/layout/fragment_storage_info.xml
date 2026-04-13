@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:background="?attr/colorSecondary"
-    tools:context=".fragments.ProductInfoFragment">
+    tools:context=".fragments.StorageInfoFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/fragment_product_info_textview_error"
+            android:id="@+id/fragment_storage_info_textview_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -29,30 +29,30 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/fragment_product_info_name"
-            android:autofillHints="@string/hint_product_name"
-            android:inputType="textMultiLine"
+            android:id="@+id/fragment_storage_info_quantity"
+            android:autofillHints="@string/hint_storage_quantity"
+            android:inputType="number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="48dp"
-            android:hint="@string/hint_product_name"
+            android:hint="@string/hint_storage_quantity"
             android:textColorHint="?attr/colorPrimary"
             android:textColor="?attr/colorPrimary"
             app:backgroundTint="?attr/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_textview_error" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_info_textview_error" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/fragment_product_info_description"
-            android:autofillHints="@string/hint_product_description"
+            android:id="@+id/fragment_storage_info_location"
+            android:autofillHints="@string/hint_storage_location"
             android:inputType="textMultiLine"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/hint_product_description"
+            android:hint="@string/hint_storage_location"
             android:textColorHint="?attr/colorPrimary"
             android:textColor="?attr/colorPrimary"
             android:layout_marginTop="48dp"
@@ -61,34 +61,15 @@
             app:backgroundTint="?attr/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_name" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/fragment_product_info_price"
-            android:autofillHints="@string/hint_product_price"
-            android:inputType="numberDecimal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/hint_product_price"
-            android:textColorHint="?attr/colorPrimary"
-            android:textColor="?attr/colorPrimary"
-            android:layout_marginTop="48dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            app:backgroundTint="?attr/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_description" />
-
+            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_info_quantity" />
 
         <Spinner
-            android:id="@+id/fragment_product_info_id_category"
-            android:autofillHints="@string/hint_product_category"
+            android:id="@+id/fragment_storage_info_id_product"
+            android:autofillHints="@string/hint_storage_product"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:ems="10"
-            android:hint="@string/hint_product_category"
+            android:hint="@string/hint_storage_product"
             android:textColorHint="?attr/colorPrimary"
             android:textColor="?attr/colorPrimary"
             android:layout_marginTop="48dp"
@@ -97,10 +78,10 @@
             app:backgroundTint="?attr/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_price" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_info_location" />
 
         <ImageButton
-            android:id="@+id/fragment_product_info_submitbutton"
+            android:id="@+id/fragment_storage_info_submitbutton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="end|bottom"
@@ -110,10 +91,10 @@
             android:backgroundTint="?attr/colorPrimary"
             android:contentDescription="@string/submit_button"
             android:scaleType="center"
-            android:src="@drawable/baseline_edit_24"
+            android:src="@drawable/baseline_done_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_id_category" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_info_id_product" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

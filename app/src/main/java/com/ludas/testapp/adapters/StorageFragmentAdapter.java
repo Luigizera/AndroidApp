@@ -12,62 +12,70 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ludas.testapp.R;
 import com.ludas.testapp.database.AppDatabase;
-import com.ludas.testapp.database.User;
-import com.ludas.testapp.database.UserDao;
+import com.ludas.testapp.database.CategoryDao;
+import com.ludas.testapp.database.Product;
+import com.ludas.testapp.database.ProductDao;
+import com.ludas.testapp.database.Storage;
+import com.ludas.testapp.database.StorageDao;
 
 import java.util.List;
 
-public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapter.ViewHolder> {
+public class StorageFragmentAdapter extends RecyclerView.Adapter<StorageFragmentAdapter.ViewHolder> {
 
-    private List<User> users;
+    private List<Storage> storages;
     private AppDatabase database;
-    private UserDao userDao;
+    private ProductDao productDao;
+    private StorageDao storageDao;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        protected final TextView recDate, recFirstName, recLastName;
+        protected final TextView recProductName, recQuantity, recLocation;
         protected final ImageButton recDelete;
 
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
-            recDate = (TextView) view.findViewById(R.id.singlerowdesign_recview_date);
-            recFirstName = (TextView) view.findViewById(R.id.singlerowdesign_recview_firstName);
-            recLastName = (TextView) view.findViewById(R.id.singlerowdesign_recview_lastName);
-            recDelete = (ImageButton) view.findViewById(R.id.singlerowdesign_recview_delete);
+            recProductName = (TextView) view.findViewById(R.id.storage_recview_product_name);
+            recQuantity = (TextView) view.findViewById(R.id.storage_recview_quantity);
+            recLocation = (TextView) view.findViewById(R.id.storage_recview_location);
+            recDelete = (ImageButton) view.findViewById(R.id.storage_recview_delete);
         }
     }
 
     public interface OnListClicked {
-        void onSelected(String userDate);
+        void onStorageSelected(long storageId);
     }
 
-    public HomeFragmentAdapter(List<User> users) {
-        this.users = users;
+    public StorageFragmentAdapter(List<Storage> storages) {
+        this.storages = storages;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.singlerowdesign, viewGroup, false);
+                .inflate(R.layout.list_storage, viewGroup, false);
         database = AppDatabase.getInstance(view.getContext());
-        userDao = database.userDao();
+        productDao = database.productDao();
+        storageDao = database.storageDao();
         return new ViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        String userDate = users.get(position).getDate();
-        viewHolder.recDate.setText(userDate);
-        viewHolder.recFirstName.setText(users.get(position).getFirstName());
-        viewHolder.recLastName.setText(users.get(position).getLastName());
+        Storage storage = storages.get(position);
+        long storageId = storage.getId_storage();
+        viewHolder.recQuantity.setText(String.valueOf(storage.getQuantity()));
+        viewHolder.recLocation.setText(storage.getLocation());
+        viewHolder.recProductName.setText(productDao.findById(storage.getId_product()).getName());
+
+
         viewHolder.recDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userDao.deleteByDate(userDate);
+                storageDao.deleteById(storageId);
                 int pos = viewHolder.getAbsoluteAdapterPosition();
-                users.remove(pos);
+                storages.remove(pos);
                 notifyItemRemoved(pos);
             }
         });
@@ -76,7 +84,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
             public void onClick(View view) {
                 try {
                     OnListClicked listener = (OnListClicked) view.getContext();
-                    listener.onSelected(userDate);
+                    listener.onStorageSelected(storageId);
                 }
                 catch (ClassCastException e) {
                     return;
@@ -87,6 +95,6 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return storages.size();
     }
 }

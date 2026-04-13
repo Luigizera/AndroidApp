@@ -85,7 +85,6 @@
         <Spinner
             android:id="@+id/fragment_product_insert_id_category"
             android:autofillHints="@string/hint_product_category"
-            android:inputType="numberDecimal"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:ems="10"

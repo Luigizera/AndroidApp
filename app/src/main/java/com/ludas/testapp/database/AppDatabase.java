@@ -13,13 +13,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-@Database(entities = {User.class, Category.class, Product.class}, version = 1)
+@Database(entities = {User.class, Category.class, Product.class, Storage.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
-
     private static AppDatabase instance;
     public abstract UserDao userDao();
     public abstract CategoryDao categoryDao();
     public abstract ProductDao productDao();
+    public abstract StorageDao storageDao();
 
     public static synchronized AppDatabase getInstance(Context context) {
         if(instance == null) {

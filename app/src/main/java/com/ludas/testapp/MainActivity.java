@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.ludas.testapp.adapters.CategoryFragmentAdapter;
 import com.ludas.testapp.adapters.HomeFragmentAdapter;
 import com.ludas.testapp.adapters.ProductFragmentAdapter;
+import com.ludas.testapp.adapters.StorageFragmentAdapter;
 import com.ludas.testapp.databinding.ActivityMainBinding;
 import com.ludas.testapp.fragments.CategoryFragment;
 import com.ludas.testapp.fragments.CategoryInfoFragment;
@@ -29,11 +30,16 @@ import com.ludas.testapp.fragments.ProductInsertFragment;
 import com.ludas.testapp.fragments.ProfileFragment;
 import com.ludas.testapp.fragments.InsertFragment;
 import com.ludas.testapp.fragments.SettingsFragment;
-
+import com.ludas.testapp.fragments.StorageFragment;
+import com.ludas.testapp.fragments.StorageInfoFragment;
+import com.ludas.testapp.fragments.StorageInsertFragment;
 
 
 public class MainActivity extends AppCompatActivity implements
-        HomeFragmentAdapter.OnListClicked, CategoryFragmentAdapter.OnListClicked, ProductFragmentAdapter.OnListClicked {
+        HomeFragmentAdapter.OnListClicked,
+        CategoryFragmentAdapter.OnListClicked,
+        ProductFragmentAdapter.OnListClicked,
+        StorageFragmentAdapter.OnListClicked {
     public static final String TAG = "MainActivity";
     ActivityMainBinding binding;
     DrawerLayout drawerLayout;
@@ -42,9 +48,14 @@ public class MainActivity extends AppCompatActivity implements
     MaterialToolbar toolbar;
 
 
+    /*TODO:
+       - ANTES DE DELETAR DO DATABASE FAZER VERIFICAÇÃO DE TABELAS
+
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
@@ -53,14 +64,12 @@ public class MainActivity extends AppCompatActivity implements
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         toolbar = findViewById(R.id.activity_main_appbarlayout_toolbar);
         drawerLayout = findViewById(R.id.main);
         leftNavigationView = findViewById(R.id.activity_main_leftnavview);
-
 
         if(savedInstanceState == null) {
             addFragment(HomeFragment.newInstance(), HomeFragment.TAG);
@@ -93,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
 
+                //TODO: Alterar essa bomba pra apenas 1
                 if (itemId == R.id.left_nav_menu_home) {
                     replaceFragment(HomeFragment.newInstance(), HomeFragment.TAG);
                 }
@@ -121,6 +131,16 @@ public class MainActivity extends AppCompatActivity implements
                 }
                 if(itemId == R.id.left_nav_menu_product_add) {
                     replaceFragment(ProductInsertFragment.newInstance(), ProductInsertFragment.TAG);
+                }
+
+                if (itemId == R.id.left_nav_menu_storage_home) {
+                    replaceFragment(StorageFragment.newInstance(), StorageFragment.TAG);
+                }
+                if(itemId == R.id.left_nav_menu_storage_info) {
+                    replaceFragment(StorageInfoFragment.newInstance(-1), StorageInfoFragment.TAG);
+                }
+                if(itemId == R.id.left_nav_menu_storage_add) {
+                    replaceFragment(StorageInsertFragment.newInstance(), StorageInsertFragment.TAG);
                 }
 
                 if(drawerLayout.isDrawerOpen(leftNavigationView)) {
@@ -173,5 +193,10 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onProductSelected(long productId) {
         replaceWithBackStack(ProductInfoFragment.newInstance(productId), ProductInfoFragment.TAG);
+    }
+
+    @Override
+    public void onStorageSelected(long storageId) {
+        replaceWithBackStack(StorageInfoFragment.newInstance(storageId), StorageInfoFragment.TAG);
     }
 }

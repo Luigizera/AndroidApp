@@ -13,7 +13,9 @@
     <string name="error_empty_description">Description is empty</string>
     <string name="error_empty_price">Price is empty</string>
     <string name="error_convert_price">Price is not a number</string>
+    <string name="error_convert_quantity">Quantity is not a number</string>
     <string name="error_empty_category_spinner">Category is empty</string>
+    <string name="error_empty_product_spinner">Product is empty</string>
     <string name="category_error_already_exists">Name already exist</string>
     <string name="bottom_nav_menu_home">Home</string>
     <string name="bottom_nav_menu_profile">Profile</string>
@@ -32,4 +34,10 @@
     <string name="hint_product_description">Product Description</string>
     <string name="hint_product_price">Product Price</string>
     <string name="hint_product_category">Product Category</string>
+    <string name="hint_storage_quantity">Storage Quantity</string>
+    <string name="hint_storage_location">Storage Location</string>
+    <string name="hint_storage_product">Storage Product</string>
+    <string name="error_empty_quantity">Quantity is empty</string>
+    <string name="error_empty_location">Location is empty</string>
+    <string name="left_nav_menu_storage">Storage</string>
 </resources>

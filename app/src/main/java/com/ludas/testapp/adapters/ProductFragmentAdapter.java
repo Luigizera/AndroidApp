@@ -26,10 +26,7 @@ public class ProductFragmentAdapter extends RecyclerView.Adapter<ProductFragment
     private CategoryDao categoryDao;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        protected final TextView recName;
-        protected final TextView recDescription;
-        protected final TextView recPrice;
-        protected final TextView recCategory;
+        protected final TextView recName, recDescription, recPrice, recCategory;
         protected final ImageButton recDelete;
 
         public ViewHolder(View view) {
