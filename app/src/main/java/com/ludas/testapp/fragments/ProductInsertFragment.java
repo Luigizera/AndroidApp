@@ -30,11 +30,11 @@ public class ProductInsertFragment extends Fragment {
     public static final String TAG = "ProductInsertFragment";
 
     private EditText name, description, price;
-    private Spinner spinnerCategory;
     private TextView textviewError;
     private ImageButton imageButtonSubmit;
     private List<Category> list;
     private ProductDao productDao;
+    private Spinner spinnerCategory;
     private ArrayAdapter<Category> spinnerAdapter;
 
     public ProductInsertFragment() {

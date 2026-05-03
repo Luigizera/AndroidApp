@@ -1,5 +1,6 @@
 package com.ludas.testapp;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements
         StorageFragmentAdapter.OnListClicked {
     public static final String TAG = "MainActivity";
     ActivityMainBinding binding;
+    FragmentManager fragmentManager;
     DrawerLayout drawerLayout;
     NavigationView leftNavigationView;
     //ActionBarDrawerToggle toggle;
@@ -67,9 +70,11 @@ public class MainActivity extends AppCompatActivity implements
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        fragmentManager = getSupportFragmentManager();
         toolbar = findViewById(R.id.activity_main_appbarlayout_toolbar);
         drawerLayout = findViewById(R.id.main);
         leftNavigationView = findViewById(R.id.activity_main_leftnavview);
+        leftNavigationView.bringToFront();
 
         if(savedInstanceState == null) {
             addFragment(HomeFragment.newInstance(), HomeFragment.TAG);
@@ -98,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements
             return true;
         });
         leftNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
@@ -106,40 +112,40 @@ public class MainActivity extends AppCompatActivity implements
                 if (itemId == R.id.left_nav_menu_home) {
                     replaceFragment(HomeFragment.newInstance(), HomeFragment.TAG);
                 }
-                if(itemId == R.id.left_nav_menu_profile) {
+                else if(itemId == R.id.left_nav_menu_profile) {
                     replaceFragment(ProfileFragment.newInstance(null), ProfileFragment.TAG);
                 }
-                if(itemId == R.id.left_nav_menu_add) {
+                else if(itemId == R.id.left_nav_menu_add) {
                     replaceFragment(InsertFragment.newInstance(), InsertFragment.TAG);
                 }
 
-                if (itemId == R.id.left_nav_menu_category_home) {
+                else if (itemId == R.id.left_nav_menu_category_home) {
                     replaceFragment(CategoryFragment.newInstance(), CategoryFragment.TAG);
                 }
-                if(itemId == R.id.left_nav_menu_category_info) {
+                else if(itemId == R.id.left_nav_menu_category_info) {
                     replaceFragment(CategoryInfoFragment.newInstance(-1), CategoryInfoFragment.TAG);
                 }
-                if(itemId == R.id.left_nav_menu_category_add) {
+                else if(itemId == R.id.left_nav_menu_category_add) {
                     replaceFragment(CategoryInsertFragment.newInstance(), CategoryInsertFragment.TAG);
                 }
 
-                if (itemId == R.id.left_nav_menu_product_home) {
+                else if(itemId == R.id.left_nav_menu_product_home) {
                     replaceFragment(ProductFragment.newInstance(), ProductFragment.TAG);
                 }
-                if(itemId == R.id.left_nav_menu_product_info) {
+                else if(itemId == R.id.left_nav_menu_product_info) {
                     replaceFragment(ProductInfoFragment.newInstance(-1), ProductInfoFragment.TAG);
                 }
-                if(itemId == R.id.left_nav_menu_product_add) {
+                else if(itemId == R.id.left_nav_menu_product_add) {
                     replaceFragment(ProductInsertFragment.newInstance(), ProductInsertFragment.TAG);
                 }
 
-                if (itemId == R.id.left_nav_menu_storage_home) {
+                else if(itemId == R.id.left_nav_menu_storage_home) {
                     replaceFragment(StorageFragment.newInstance(), StorageFragment.TAG);
                 }
-                if(itemId == R.id.left_nav_menu_storage_info) {
+                else if(itemId == R.id.left_nav_menu_storage_info) {
                     replaceFragment(StorageInfoFragment.newInstance(-1), StorageInfoFragment.TAG);
                 }
-                if(itemId == R.id.left_nav_menu_storage_add) {
+                else if(itemId == R.id.left_nav_menu_storage_add) {
                     replaceFragment(StorageInsertFragment.newInstance(), StorageInsertFragment.TAG);
                 }
 
@@ -160,20 +166,20 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void addFragment(Fragment fragment, String tag) {
-        getSupportFragmentManager()
+        fragmentManager
                 .beginTransaction()
                 .add(R.id.activity_main_framelayout, fragment, tag)
                 .commit();
     }
 
     private void replaceFragment(Fragment fragment, String tag) {
-        getSupportFragmentManager()
+        fragmentManager
                 .beginTransaction()
                 .replace(R.id.activity_main_framelayout, fragment, tag)
                 .commit();
     }
     private void replaceWithBackStack(Fragment fragment, String tag) {
-        getSupportFragmentManager()
+        fragmentManager
                 .beginTransaction()
                 .replace(R.id.activity_main_framelayout, fragment, tag)
                 .addToBackStack(tag)

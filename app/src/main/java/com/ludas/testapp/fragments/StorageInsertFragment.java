@@ -94,7 +94,7 @@ public class StorageInsertFragment extends Fragment {
                 textviewError.setVisibility(View.INVISIBLE);
                 storageDao.insertAll(new Storage(Integer.parseInt(quantity.getText().toString()),
                         location.getText().toString(),
-                        selectedValue.getId_category()));
+                        selectedValue.getId_product()));
                 quantity.setText("");
                 location.setText("");
             }

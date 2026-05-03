@@ -1,5 +1,6 @@
 package com.ludas.testapp.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -74,6 +75,12 @@ public class Product {
 
     public void setId_category(long id_category) {
         this.id_category = id_category;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
     }
 
     @Override
