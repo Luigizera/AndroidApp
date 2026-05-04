@@ -22,15 +22,6 @@ public interface ProductDao {
     @Query("SELECT * FROM products WHERE id_product = :id")
     Product findById(long id);
 
-    @Query("SELECT * FROM products WHERE name LIKE :name")
-    List<Product> findByName(String name);
-
-    @Query("SELECT * FROM products WHERE price BETWEEN :min AND :max")
-    List<Product> findByPrice(long min, long max);
-
-    @Query("SELECT * FROM products WHERE description LIKE :description")
-    List<Product> findByDescription(String description);
-
     @Query("SELECT * FROM products WHERE id_category = :id_category")
     Product findByCategory(long id_category);
 

@@ -1,6 +1,7 @@
 package com.ludas.testapp.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ludas.testapp.R;
@@ -63,7 +65,6 @@ public class ProductFragmentAdapter extends RecyclerView.Adapter<ProductFragment
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         Product product = products.get(position);
-        long productId = product.getId_product();
         viewHolder.recName.setText(product.getName());
         viewHolder.recDescription.setText(product.getDescription());
         viewHolder.recPrice.setText(String.valueOf(product.getPrice()));
@@ -73,10 +74,23 @@ public class ProductFragmentAdapter extends RecyclerView.Adapter<ProductFragment
         viewHolder.recDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                productDao.deleteById(productId);
-                int pos = viewHolder.getAbsoluteAdapterPosition();
-                products.remove(pos);
-                notifyItemRemoved(pos);
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext())
+                        .setTitle(product.getName())
+                        .setMessage(R.string.product_info_delete_confirmation)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                productDao.delete(product);
+                                int pos = viewHolder.getAbsoluteAdapterPosition();
+                                products.remove(pos);
+                                notifyItemRemoved(pos);
+                            }})
+                        .setNegativeButton(android.R.string.cancel, null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                //TODO: DESCOBRIR COMO FAZER UM TEMA DECENTE PARA DELETAR ESSE CODIGO ABAIXO
+                dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(R.style.Theme_TestApp);
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(R.style.Theme_TestApp);
             }
         });
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +98,7 @@ public class ProductFragmentAdapter extends RecyclerView.Adapter<ProductFragment
             public void onClick(View view) {
                 try {
                     OnListClicked listener = (OnListClicked) view.getContext();
-                    listener.onProductSelected(productId);
+                    listener.onProductSelected(product.getId_product());
                 }
                 catch (ClassCastException e) {
                     return;

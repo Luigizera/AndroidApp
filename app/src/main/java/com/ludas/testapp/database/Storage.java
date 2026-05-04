@@ -1,5 +1,6 @@
 package com.ludas.testapp.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -62,6 +63,12 @@ public class Storage {
 
     public void setId_product(long id_product) {
         this.id_product = id_product;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.valueOf(id_storage);
     }
 
     @Override

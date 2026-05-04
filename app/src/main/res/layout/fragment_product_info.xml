@@ -115,5 +115,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_id_category" />
 
+        <ImageButton
+            android:id="@+id/fragment_product_info_deletebutton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:layout_marginTop="373dp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="?attr/colorError"
+            android:contentDescription="@string/delete"
+            android:scaleType="center"
+            android:src="@drawable/baseline_remove_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_id_category" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

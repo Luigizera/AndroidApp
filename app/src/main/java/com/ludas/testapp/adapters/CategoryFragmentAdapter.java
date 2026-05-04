@@ -1,6 +1,8 @@
 package com.ludas.testapp.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ludas.testapp.R;
@@ -58,16 +61,31 @@ public class CategoryFragmentAdapter extends RecyclerView.Adapter<CategoryFragme
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        long categoryId = categories.get(position).getId_category();
-        viewHolder.recId.setText(String.valueOf(categoryId));
+        Category category = categories.get(position);
+        viewHolder.recId.setText(String.valueOf(category.getId_category()));
         viewHolder.recName.setText(categories.get(position).getName());
         viewHolder.recDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                categoryDao.deleteById(categoryId);
-                int pos = viewHolder.getAbsoluteAdapterPosition();
-                categories.remove(pos);
-                notifyItemRemoved(pos);
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext())
+                        .setTitle(category.getName())
+                        .setMessage(R.string.category_info_delete_confirmation)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                categoryDao.delete(category);
+                                int pos = viewHolder.getAbsoluteAdapterPosition();
+                                categories.remove(pos);
+                                notifyItemRemoved(pos);
+                            }})
+                        .setNegativeButton(android.R.string.cancel, null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                //TODO: DESCOBRIR COMO FAZER UM TEMA DECENTE PARA DELETAR ESSE CODIGO ABAIXO
+                dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(R.style.Theme_TestApp);
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(R.style.Theme_TestApp);
+
             }
         });
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +93,7 @@ public class CategoryFragmentAdapter extends RecyclerView.Adapter<CategoryFragme
             public void onClick(View view) {
                 try {
                     OnListClicked listener = (OnListClicked) view.getContext();
-                    listener.onCategorySelected(categoryId);
+                    listener.onCategorySelected(category.getId_category());
                 }
                 catch (ClassCastException e) {
                     return;

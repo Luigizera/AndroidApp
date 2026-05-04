@@ -1,13 +1,17 @@
 package com.ludas.testapp.fragments;
 
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -26,6 +30,7 @@ public class CategoryInfoFragment extends Fragment {
     private TextView textViewError;
     private EditText editTextName;
     private ImageButton imageButtonSubmit;
+    private ImageButton imageButtonDelete;
     private CategoryDao categoryDao;
     private Category category;
 
@@ -63,6 +68,7 @@ public class CategoryInfoFragment extends Fragment {
             editTextName.setText(category.getName());
             textViewError = view.findViewById(R.id.fragment_category_info_textview_error);
             imageButtonSubmit = view.findViewById(R.id.fragment_category_info_submitbutton);
+            imageButtonDelete = view.findViewById(R.id.fragment_category_info_deletebutton);
 
             imageButtonSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -85,6 +91,32 @@ public class CategoryInfoFragment extends Fragment {
 
                     getParentFragmentManager().setFragmentResult("request_key", result);
                     getParentFragmentManager().popBackStack();
+                }
+            });
+
+            imageButtonDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                            .setTitle(category.getName())
+                            .setMessage(R.string.category_info_delete_confirmation)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    categoryDao.delete(category);
+                                    Bundle result = new Bundle();
+                                    result.putBoolean("refresh_key", true);
+
+                                    getParentFragmentManager().setFragmentResult("request_key", result);
+                                    getParentFragmentManager().popBackStack();
+                                }})
+                            .setNegativeButton(android.R.string.cancel, null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                    //TODO: DESCOBRIR COMO FAZER UM TEMA DECENTE PARA DELETAR ESSE CODIGO ABAIXO
+                    dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(R.style.Theme_TestApp);
+                    dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(R.style.Theme_TestApp);
                 }
             });
         }

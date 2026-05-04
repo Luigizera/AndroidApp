@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements
 
     /*TODO:
        - ANTES DE DELETAR DO DATABASE FAZER VERIFICAÇÃO DE TABELAS
-
+       - https://github.com/codepath/android_guides/wiki/Developing-Custom-Themes
+       - https://www.geeksforgeeks.org/android/how-to-implement-custom-searchable-spinner-in-android/
     */
 
     @Override
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements
         leftNavigationView.bringToFront();
 
         if(savedInstanceState == null) {
-            addFragment(HomeFragment.newInstance(), HomeFragment.TAG);
+            addFragment(StorageFragment.newInstance(), HomeFragment.TAG);
         }
         /*binding.activityMainBottomnavview.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -93,22 +94,15 @@ public class MainActivity extends AppCompatActivity implements
             }
 
             return true;
-        });*/
-        binding.activityMainAppbarlayoutToolbar.setOnMenuItemClickListener(item -> {
-            int itemId = item.getItemId();
-
-            if(itemId == R.id.top_nav_menu_settings) {
-                replaceFragment(SettingsFragment.newInstance(), SettingsFragment.TAG);
-            }
-            return true;
         });
+
+        >> USADO PARA DEBUG
         leftNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
 
-                //TODO: Alterar essa bomba pra apenas 1
                 if (itemId == R.id.left_nav_menu_home) {
                     replaceFragment(HomeFragment.newInstance(), HomeFragment.TAG);
                 }
@@ -147,6 +141,36 @@ public class MainActivity extends AppCompatActivity implements
                 }
                 else if(itemId == R.id.left_nav_menu_storage_add) {
                     replaceFragment(StorageInsertFragment.newInstance(), StorageInsertFragment.TAG);
+                }
+
+                if(drawerLayout.isDrawerOpen(leftNavigationView)) {
+                    drawerLayout.closeDrawer(leftNavigationView);
+                }
+                return true;
+            }
+        });*/
+        binding.activityMainAppbarlayoutToolbar.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+
+            if(itemId == R.id.top_nav_menu_settings) {
+                replaceFragment(SettingsFragment.newInstance(), SettingsFragment.TAG);
+            }
+            return true;
+        });
+        leftNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+
+                if (itemId == R.id.left_nav_menu_category) {
+                    replaceFragment(CategoryFragment.newInstance(), CategoryFragment.TAG);
+                }
+                else if(itemId == R.id.left_nav_menu_product) {
+                    replaceFragment(ProductFragment.newInstance(), ProductFragment.TAG);
+                }
+                else if(itemId == R.id.left_nav_menu_storage) {
+                    replaceFragment(StorageFragment.newInstance(), StorageFragment.TAG);
                 }
 
                 if(drawerLayout.isDrawerOpen(leftNavigationView)) {

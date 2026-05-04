@@ -1,6 +1,7 @@
 package com.ludas.testapp.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ludas.testapp.R;
@@ -64,7 +66,6 @@ public class StorageFragmentAdapter extends RecyclerView.Adapter<StorageFragment
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         Storage storage = storages.get(position);
-        long storageId = storage.getId_storage();
         viewHolder.recQuantity.setText(String.valueOf(storage.getQuantity()));
         viewHolder.recLocation.setText(storage.getLocation());
         viewHolder.recProductName.setText(productDao.findById(storage.getId_product()).getName());
@@ -73,10 +74,25 @@ public class StorageFragmentAdapter extends RecyclerView.Adapter<StorageFragment
         viewHolder.recDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                storageDao.deleteById(storageId);
-                int pos = viewHolder.getAbsoluteAdapterPosition();
-                storages.remove(pos);
-                notifyItemRemoved(pos);
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext())
+                        .setTitle(storage.getLocation() + " - " +
+                                productDao.findById(storage.getId_product()).getName() + ": " +
+                                storage.getQuantity())
+                        .setMessage(R.string.storage_info_delete_confirmation)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                storageDao.delete(storage);
+                                int pos = viewHolder.getAbsoluteAdapterPosition();
+                                storages.remove(pos);
+                                notifyItemRemoved(pos);
+                            }})
+                        .setNegativeButton(android.R.string.cancel, null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                //TODO: DESCOBRIR COMO FAZER UM TEMA DECENTE PARA DELETAR ESSE CODIGO ABAIXO
+                dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(R.style.Theme_TestApp);
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(R.style.Theme_TestApp);
             }
         });
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +100,7 @@ public class StorageFragmentAdapter extends RecyclerView.Adapter<StorageFragment
             public void onClick(View view) {
                 try {
                     OnListClicked listener = (OnListClicked) view.getContext();
-                    listener.onStorageSelected(storageId);
+                    listener.onStorageSelected(storage.getId_storage());
                 }
                 catch (ClassCastException e) {
                     return;
