@@ -26,8 +26,8 @@ public class StorageInsertFragment extends Fragment {
 
     public static final String TAG = "StorageInsertFragment";
 
-    private EditText quantity, location;
-    private TextView textviewError;
+    private EditText editTextQuantity, editTextLocation;
+    private TextView textViewError;
     private ImageButton imageButtonSubmit;
     private StorageDao storageDao;
     private List<Product> list;
@@ -62,41 +62,48 @@ public class StorageInsertFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_storage_insert, container, false);
-        quantity = view.findViewById(R.id.fragment_storage_insert_quantity);
-        location = view.findViewById(R.id.fragment_storage_insert_location);
+        editTextQuantity = view.findViewById(R.id.fragment_storage_insert_edittext_quantity);
+        editTextLocation = view.findViewById(R.id.fragment_storage_insert_edittext_location);
         spinnerProduct = view.findViewById(R.id.fragment_storage_insert_id_product);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerProduct.setAdapter(spinnerAdapter);
 
-        textviewError = view.findViewById(R.id.fragment_storage_insert_textview_error);
+        textViewError = view.findViewById(R.id.fragment_storage_insert_textview_error);
         imageButtonSubmit = view.findViewById(R.id.fragment_storage_insert_submitbutton);
 
         imageButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: verificar quantity se é inteiro
-                if(quantity.getText().toString().isEmpty()) {
-                    textviewError.setVisibility(View.VISIBLE);
-                    textviewError.setText(R.string.error_empty_quantity);
+                if(editTextQuantity.getText().toString().isEmpty()) {
+                    textViewError.setVisibility(View.VISIBLE);
+                    textViewError.setText(R.string.error_empty_quantity);
                     return;
                 }
-                if(location.getText().toString().isEmpty()) {
-                    textviewError.setVisibility(View.VISIBLE);
-                    textviewError.setText(R.string.error_empty_location);
+                if(editTextLocation.getText().toString().isEmpty()) {
+                    textViewError.setVisibility(View.VISIBLE);
+                    textViewError.setText(R.string.error_empty_location);
                     return;
                 }
                 if(spinnerProduct.getSelectedItem() == null) {
-                    textviewError.setVisibility(View.VISIBLE);
-                    textviewError.setText(R.string.error_empty_product_spinner);
+                    textViewError.setVisibility(View.VISIBLE);
+                    textViewError.setText(R.string.error_empty_product_spinner);
+                    return;
+                }
+                int quantity;
+                try {
+                    quantity = Integer.parseInt(editTextQuantity.getText().toString());
+                } catch (Exception e) {
+                    textViewError.setVisibility(View.VISIBLE);
+                    textViewError.setText(R.string.error_convert_quantity);
                     return;
                 }
                 Product selectedValue = (Product) spinnerProduct.getSelectedItem();
-                textviewError.setVisibility(View.INVISIBLE);
-                storageDao.insertAll(new Storage(Integer.parseInt(quantity.getText().toString()),
-                        location.getText().toString(),
+                textViewError.setVisibility(View.INVISIBLE);
+                storageDao.insertAll(new Storage(quantity,
+                        editTextLocation.getText().toString(),
                         selectedValue.getId_product()));
-                quantity.setText("");
-                location.setText("");
+                editTextQuantity.setText("");
+                editTextLocation.setText("");
             }
         });
         return view;

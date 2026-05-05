@@ -13,7 +13,7 @@
     <string name="error_empty_description">Description is empty</string>
     <string name="error_empty_price">Price is empty</string>
     <string name="error_convert_price">Price is not a number</string>
-    <string name="error_convert_quantity">Quantity is not a number</string>
+    <string name="error_convert_quantity">Quantity is not a number/integer</string>
     <string name="error_empty_category_spinner">Category is empty</string>
     <string name="error_empty_product_spinner">Product is empty</string>
     <string name="category_error_already_exists">Category name already exists</string>
@@ -22,6 +22,7 @@
     <string name="bottom_nav_menu_add">Add</string>
     <string name="top_nav_menu_settings">Settings</string>
     <string name="left_nav_menu_test">Test</string>
+    <string name="left_nav_menu_title_database">Database</string>
     <string name="left_nav_menu_category">Category</string>
     <string name="left_nav_menu_home">Home</string>
     <string name="left_nav_menu_add">Add</string>
@@ -29,18 +30,26 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="sample_text">Sample Text</string>
     <string name="left_nav_menu_product">Product</string>
-    <string name="hint_category_name">Category Name</string>
-    <string name="hint_product_name">Product Name</string>
-    <string name="hint_product_description">Product Description</string>
-    <string name="hint_product_price">Product Price</string>
-    <string name="hint_product_category">Product Category</string>
-    <string name="hint_storage_quantity">Storage Quantity</string>
-    <string name="hint_storage_location">Storage Location</string>
-    <string name="hint_storage_product">Storage Product</string>
+    <string name="hint_category_name">Write the category name…</string>
+    <string name="hint_product_name">Write the product name…</string>
+    <string name="hint_product_description">Write the product description…</string>
+    <string name="hint_product_price">Write the product price (Ex: 72.00)…</string>
+    <string name="hint_product_category">Select the product category…</string>
+    <string name="hint_storage_quantity">Write the allocation quantity (Ex: 25)…</string>
+    <string name="hint_storage_location">Write the storage location (Ex: B584)…</string>
+    <string name="hint_storage_product">Select the allocation product…</string>
     <string name="error_empty_quantity">Quantity is empty</string>
     <string name="error_empty_location">Location is empty</string>
     <string name="left_nav_menu_storage">Storage</string>
     <string name="category_info_delete_confirmation">Do you really want to delete this category?</string>
     <string name="product_info_delete_confirmation">Do you really want to delete this product?</string>
     <string name="storage_info_delete_confirmation">Do you really want to delete this allocation?</string>
+    <string name="text_category_name">Category Name</string>
+    <string name="text_product_name">Product name</string>
+    <string name="text_product_description">Product description</string>
+    <string name="text_product_price">Product price</string>
+    <string name="text_product_category">Product category</string>
+    <string name="text_storage_quantity">Storage quantity</string>
+    <string name="text_storage_location">Storage location</string>
+    <string name="text_storage_product">Storage product</string>
 </resources>

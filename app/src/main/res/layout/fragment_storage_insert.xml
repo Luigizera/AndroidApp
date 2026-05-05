@@ -28,8 +28,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/fragment_storage_insert_textview_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:ems="10"
+            android:text="@string/text_storage_quantity"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_storage_insert_edittext_quantity"
+            app:layout_constraintStart_toStartOf="parent" />
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/fragment_storage_insert_quantity"
+            android:id="@+id/fragment_storage_insert_edittext_quantity"
             android:autofillHints="@string/hint_storage_quantity"
             android:inputType="number"
             android:layout_width="0dp"
@@ -45,8 +55,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_storage_insert_textview_error" />
 
+        <TextView
+            android:id="@+id/fragment_storage_insert_textview_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:ems="10"
+            android:text="@string/text_storage_location"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_storage_insert_edittext_location"
+            app:layout_constraintStart_toStartOf="parent" />
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/fragment_storage_insert_location"
+            android:id="@+id/fragment_storage_insert_edittext_location"
             android:autofillHints="@string/hint_storage_location"
             android:inputType="textMultiLine"
             android:layout_width="0dp"
@@ -61,8 +81,18 @@
             app:backgroundTint="?attr/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_insert_quantity" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_insert_edittext_quantity" />
 
+        <TextView
+            android:id="@+id/fragment_storage_insert_textview_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:ems="10"
+            android:text="@string/text_storage_product"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_storage_insert_id_product"
+            app:layout_constraintStart_toStartOf="parent" />
         <Spinner
             android:id="@+id/fragment_storage_insert_id_product"
             android:autofillHints="@string/hint_storage_product"
@@ -78,7 +108,7 @@
             app:backgroundTint="?attr/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_insert_location" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_insert_edittext_location" />
 
         <ImageButton
             android:id="@+id/fragment_storage_insert_submitbutton"

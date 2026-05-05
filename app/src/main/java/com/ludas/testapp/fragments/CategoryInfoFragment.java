@@ -64,7 +64,7 @@ public class CategoryInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_category_info, container, false);
         if(category != null) {
-            editTextName = view.findViewById(R.id.fragment_category_info_name);
+            editTextName = view.findViewById(R.id.fragment_category_info_edittext_name);
             editTextName.setText(category.getName());
             textViewError = view.findViewById(R.id.fragment_category_info_textview_error);
             imageButtonSubmit = view.findViewById(R.id.fragment_category_info_submitbutton);

@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/left_nav_menu_category"
-        android:icon="@drawable/baseline_home_24"
-        android:title="@string/left_nav_menu_category"
-        android:contentDescription="@string/left_nav_menu_category">
+        android:id="@+id/left_nav_menu_title_database"
+        android:title="@string/left_nav_menu_title_database"
+        android:contentDescription="@string/left_nav_menu_title_database">
+        <menu>
+            <item
+                android:id="@+id/left_nav_menu_category"
+                android:icon="@drawable/outline_category_24"
+                android:title="@string/left_nav_menu_category"
+                android:contentDescription="@string/left_nav_menu_category">
+            </item>
+            <item
+                android:id="@+id/left_nav_menu_product"
+                android:icon="@drawable/baseline_blender_24"
+                android:title="@string/left_nav_menu_product"
+                android:contentDescription="@string/left_nav_menu_product">
+            </item>
+            <item
+                android:id="@+id/left_nav_menu_storage"
+                android:icon="@drawable/outline_box_24"
+                android:title="@string/left_nav_menu_storage"
+                android:contentDescription="@string/left_nav_menu_storage">
+            </item>
+        </menu>
     </item>
-    <item
-        android:id="@+id/left_nav_menu_product"
-        android:icon="@drawable/baseline_home_24"
-        android:title="@string/left_nav_menu_product"
-        android:contentDescription="@string/left_nav_menu_product">
-    </item>
-    <item
-        android:id="@+id/left_nav_menu_storage"
-        android:icon="@drawable/baseline_home_24"
-        android:title="@string/left_nav_menu_storage"
-        android:contentDescription="@string/left_nav_menu_storage">
-    </item>
+
 </menu>

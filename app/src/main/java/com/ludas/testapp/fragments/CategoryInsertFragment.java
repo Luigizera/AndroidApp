@@ -48,7 +48,7 @@ public class CategoryInsertFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_category_insert, container, false);
-        editTextName = view.findViewById(R.id.fragment_category_insert_name);
+        editTextName = view.findViewById(R.id.fragment_category_insert_edittext_name);
         textViewError = view.findViewById(R.id.fragment_category_insert_textview_error);
         imageButtonSubmit = view.findViewById(R.id.fragment_category_insert_submitbutton);
 

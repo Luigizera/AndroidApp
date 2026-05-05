@@ -81,9 +81,9 @@ public class StorageInfoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_storage_info, container, false);
         if(storage != null) {
             //TODO
-            editTextLocation = view.findViewById(R.id.fragment_storage_info_location);
+            editTextLocation = view.findViewById(R.id.fragment_storage_info_edittext_location);
             editTextLocation.setText(storage.getLocation());
-            editTextQuantity = view.findViewById(R.id.fragment_storage_info_quantity);
+            editTextQuantity = view.findViewById(R.id.fragment_storage_info_edittext_quantity);
             editTextQuantity.setText(String.valueOf(storage.getQuantity()));
             textViewError = view.findViewById(R.id.fragment_storage_info_textview_error);
             imageButtonSubmit = view.findViewById(R.id.fragment_storage_info_submitbutton);

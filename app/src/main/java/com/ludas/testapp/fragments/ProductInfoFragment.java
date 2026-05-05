@@ -80,11 +80,11 @@ public class ProductInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_info, container, false);
         if(product != null) {
-            editTextName = view.findViewById(R.id.fragment_product_info_name);
+            editTextName = view.findViewById(R.id.fragment_product_info_edittext_name);
             editTextName.setText(product.getName());
-            editTextDescription = view.findViewById(R.id.fragment_product_info_description);
+            editTextDescription = view.findViewById(R.id.fragment_product_info_edittext_description);
             editTextDescription.setText(product.getDescription());
-            editTextPrice = view.findViewById(R.id.fragment_product_info_price);
+            editTextPrice = view.findViewById(R.id.fragment_product_info_edittext_price);
             editTextPrice.setText(String.valueOf(product.getPrice()));
             textViewError = view.findViewById(R.id.fragment_product_info_textview_error);
             imageButtonSubmit = view.findViewById(R.id.fragment_product_info_submitbutton);

@@ -29,8 +29,8 @@ public class ProductInsertFragment extends Fragment {
 
     public static final String TAG = "ProductInsertFragment";
 
-    private EditText name, description, price;
-    private TextView textviewError;
+    private EditText editTextName, editTextDescription, editTextPrice;
+    private TextView textViewError;
     private ImageButton imageButtonSubmit;
     private List<Category> list;
     private ProductDao productDao;
@@ -65,48 +65,48 @@ public class ProductInsertFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_insert, container, false);
-        name = view.findViewById(R.id.fragment_product_insert_name);
-        description = view.findViewById(R.id.fragment_product_insert_description);
-        price = view.findViewById(R.id.fragment_product_insert_price);
+        editTextName = view.findViewById(R.id.fragment_product_insert_edittext_name);
+        editTextDescription = view.findViewById(R.id.fragment_product_insert_edittext_description);
+        editTextPrice = view.findViewById(R.id.fragment_product_insert_edittext_price);
         spinnerCategory = view.findViewById(R.id.fragment_product_insert_id_category);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(spinnerAdapter);
 
-        textviewError = view.findViewById(R.id.fragment_product_insert_textview_error);
+        textViewError = view.findViewById(R.id.fragment_product_insert_textview_error);
         imageButtonSubmit = view.findViewById(R.id.fragment_product_insert_submitbutton);
 
         imageButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(name.getText().toString().isEmpty()) {
-                    textviewError.setVisibility(View.VISIBLE);
-                    textviewError.setText(R.string.error_empty_name);
+                if(editTextName.getText().toString().isEmpty()) {
+                    textViewError.setVisibility(View.VISIBLE);
+                    textViewError.setText(R.string.error_empty_name);
                     return;
                 }
-                if(description.getText().toString().isEmpty()) {
-                    textviewError.setVisibility(View.VISIBLE);
-                    textviewError.setText(R.string.error_empty_description);
+                if(editTextDescription.getText().toString().isEmpty()) {
+                    textViewError.setVisibility(View.VISIBLE);
+                    textViewError.setText(R.string.error_empty_description);
                     return;
                 }
-                if(price.getText().toString().isEmpty()) {
-                    textviewError.setVisibility(View.VISIBLE);
-                    textviewError.setText(R.string.error_empty_price);
+                if(editTextPrice.getText().toString().isEmpty()) {
+                    textViewError.setVisibility(View.VISIBLE);
+                    textViewError.setText(R.string.error_empty_price);
                     return;
                 }
                 if(spinnerCategory.getSelectedItem() == null) {
-                    textviewError.setVisibility(View.VISIBLE);
-                    textviewError.setText(R.string.error_empty_category_spinner);
+                    textViewError.setVisibility(View.VISIBLE);
+                    textViewError.setText(R.string.error_empty_category_spinner);
                     return;
                 }
                 Category selectedValue = (Category) spinnerCategory.getSelectedItem();
-                textviewError.setVisibility(View.INVISIBLE);
-                productDao.insertAll(new Product(name.getText().toString(),
-                        description.getText().toString(),
-                        Double.parseDouble(price.getText().toString()),
+                textViewError.setVisibility(View.INVISIBLE);
+                productDao.insertAll(new Product(editTextName.getText().toString(),
+                        editTextDescription.getText().toString(),
+                        Double.parseDouble(editTextPrice.getText().toString()),
                         selectedValue.getId_category()));
-                name.setText("");
-                description.setText("");
-                price.setText("");
+                editTextName.setText("");
+                editTextDescription.setText("");
+                editTextPrice.setText("");
             }
         });
         return view;

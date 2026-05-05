@@ -80,75 +80,6 @@ public class MainActivity extends AppCompatActivity implements
         if(savedInstanceState == null) {
             addFragment(StorageFragment.newInstance(), HomeFragment.TAG);
         }
-        /*binding.activityMainBottomnavview.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-
-            if (itemId == R.id.bottom_nav_menu_home) {
-                replaceFragment(HomeFragment.newInstance(), HomeFragment.TAG);
-            }
-            if(itemId == R.id.bottom_nav_menu_profile) {
-                replaceFragment(ProfileFragment.newInstance(null), ProfileFragment.TAG);
-            }
-            if(itemId == R.id.bottom_nav_menu_add) {
-                replaceFragment(InsertFragment.newInstance(), InsertFragment.TAG);
-            }
-
-            return true;
-        });
-
-        >> USADO PARA DEBUG
-        leftNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int itemId = item.getItemId();
-
-                if (itemId == R.id.left_nav_menu_home) {
-                    replaceFragment(HomeFragment.newInstance(), HomeFragment.TAG);
-                }
-                else if(itemId == R.id.left_nav_menu_profile) {
-                    replaceFragment(ProfileFragment.newInstance(null), ProfileFragment.TAG);
-                }
-                else if(itemId == R.id.left_nav_menu_add) {
-                    replaceFragment(InsertFragment.newInstance(), InsertFragment.TAG);
-                }
-
-                else if (itemId == R.id.left_nav_menu_category_home) {
-                    replaceFragment(CategoryFragment.newInstance(), CategoryFragment.TAG);
-                }
-                else if(itemId == R.id.left_nav_menu_category_info) {
-                    replaceFragment(CategoryInfoFragment.newInstance(-1), CategoryInfoFragment.TAG);
-                }
-                else if(itemId == R.id.left_nav_menu_category_add) {
-                    replaceFragment(CategoryInsertFragment.newInstance(), CategoryInsertFragment.TAG);
-                }
-
-                else if(itemId == R.id.left_nav_menu_product_home) {
-                    replaceFragment(ProductFragment.newInstance(), ProductFragment.TAG);
-                }
-                else if(itemId == R.id.left_nav_menu_product_info) {
-                    replaceFragment(ProductInfoFragment.newInstance(-1), ProductInfoFragment.TAG);
-                }
-                else if(itemId == R.id.left_nav_menu_product_add) {
-                    replaceFragment(ProductInsertFragment.newInstance(), ProductInsertFragment.TAG);
-                }
-
-                else if(itemId == R.id.left_nav_menu_storage_home) {
-                    replaceFragment(StorageFragment.newInstance(), StorageFragment.TAG);
-                }
-                else if(itemId == R.id.left_nav_menu_storage_info) {
-                    replaceFragment(StorageInfoFragment.newInstance(-1), StorageInfoFragment.TAG);
-                }
-                else if(itemId == R.id.left_nav_menu_storage_add) {
-                    replaceFragment(StorageInsertFragment.newInstance(), StorageInsertFragment.TAG);
-                }
-
-                if(drawerLayout.isDrawerOpen(leftNavigationView)) {
-                    drawerLayout.closeDrawer(leftNavigationView);
-                }
-                return true;
-            }
-        });*/
         binding.activityMainAppbarlayoutToolbar.setOnMenuItemClickListener(item -> {
             int itemId = item.getItemId();
 
@@ -229,4 +160,75 @@ public class MainActivity extends AppCompatActivity implements
     public void onStorageSelected(long storageId) {
         replaceWithBackStack(StorageInfoFragment.newInstance(storageId), StorageInfoFragment.TAG);
     }
+
+
+    /*binding.activityMainBottomnavview.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.bottom_nav_menu_home) {
+                replaceFragment(HomeFragment.newInstance(), HomeFragment.TAG);
+            }
+            if(itemId == R.id.bottom_nav_menu_profile) {
+                replaceFragment(ProfileFragment.newInstance(null), ProfileFragment.TAG);
+            }
+            if(itemId == R.id.bottom_nav_menu_add) {
+                replaceFragment(InsertFragment.newInstance(), InsertFragment.TAG);
+            }
+
+            return true;
+        });
+
+        >> USADO PARA DEBUG
+        leftNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+
+                if (itemId == R.id.left_nav_menu_home) {
+                    replaceFragment(HomeFragment.newInstance(), HomeFragment.TAG);
+                }
+                else if(itemId == R.id.left_nav_menu_profile) {
+                    replaceFragment(ProfileFragment.newInstance(null), ProfileFragment.TAG);
+                }
+                else if(itemId == R.id.left_nav_menu_add) {
+                    replaceFragment(InsertFragment.newInstance(), InsertFragment.TAG);
+                }
+
+                else if (itemId == R.id.left_nav_menu_category_home) {
+                    replaceFragment(CategoryFragment.newInstance(), CategoryFragment.TAG);
+                }
+                else if(itemId == R.id.left_nav_menu_category_info) {
+                    replaceFragment(CategoryInfoFragment.newInstance(-1), CategoryInfoFragment.TAG);
+                }
+                else if(itemId == R.id.left_nav_menu_category_add) {
+                    replaceFragment(CategoryInsertFragment.newInstance(), CategoryInsertFragment.TAG);
+                }
+
+                else if(itemId == R.id.left_nav_menu_product_home) {
+                    replaceFragment(ProductFragment.newInstance(), ProductFragment.TAG);
+                }
+                else if(itemId == R.id.left_nav_menu_product_info) {
+                    replaceFragment(ProductInfoFragment.newInstance(-1), ProductInfoFragment.TAG);
+                }
+                else if(itemId == R.id.left_nav_menu_product_add) {
+                    replaceFragment(ProductInsertFragment.newInstance(), ProductInsertFragment.TAG);
+                }
+
+                else if(itemId == R.id.left_nav_menu_storage_home) {
+                    replaceFragment(StorageFragment.newInstance(), StorageFragment.TAG);
+                }
+                else if(itemId == R.id.left_nav_menu_storage_info) {
+                    replaceFragment(StorageInfoFragment.newInstance(-1), StorageInfoFragment.TAG);
+                }
+                else if(itemId == R.id.left_nav_menu_storage_add) {
+                    replaceFragment(StorageInsertFragment.newInstance(), StorageInsertFragment.TAG);
+                }
+
+                if(drawerLayout.isDrawerOpen(leftNavigationView)) {
+                    drawerLayout.closeDrawer(leftNavigationView);
+                }
+                return true;
+            }
+        });*/
 }
