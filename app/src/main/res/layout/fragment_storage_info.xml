@@ -54,7 +54,7 @@
             app:backgroundTint="?attr/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_info_textview_error" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_info_edittext_location" />
 
         <TextView
             android:id="@+id/fragment_storage_info_textview_location"
@@ -82,7 +82,7 @@
             app:backgroundTint="?attr/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_info_edittext_quantity" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_info_id_product" />
 
         <TextView
             android:id="@+id/fragment_storage_info_textview_product"
@@ -109,7 +109,7 @@
             app:backgroundTint="?attr/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_info_edittext_location" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_info_textview_error" />
 
         <ImageButton
             android:id="@+id/fragment_storage_info_submitbutton"
@@ -125,7 +125,7 @@
             android:src="@drawable/baseline_done_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_info_id_product" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_info_edittext_location" />
 
         <ImageButton
             android:id="@+id/fragment_storage_info_deletebutton"
@@ -141,7 +141,7 @@
             android:src="@drawable/baseline_remove_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_info_id_product" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_storage_info_edittext_location" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
