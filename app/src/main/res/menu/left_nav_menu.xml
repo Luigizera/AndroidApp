@@ -23,6 +23,12 @@
                 android:title="@string/left_nav_menu_storage"
                 android:contentDescription="@string/left_nav_menu_storage">
             </item>
+            <item
+                android:id="@+id/left_nav_menu_storage_log"
+                android:icon="@drawable/outline_box_24"
+                android:title="@string/left_nav_menu_storage_log"
+                android:contentDescription="@string/left_nav_menu_storage_log">
+            </item>
         </menu>
     </item>
 

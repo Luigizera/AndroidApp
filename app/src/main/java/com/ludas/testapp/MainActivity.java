@@ -21,6 +21,7 @@ import com.ludas.testapp.adapters.CategoryFragmentAdapter;
 import com.ludas.testapp.adapters.HomeFragmentAdapter;
 import com.ludas.testapp.adapters.ProductFragmentAdapter;
 import com.ludas.testapp.adapters.StorageFragmentAdapter;
+import com.ludas.testapp.adapters.StorageLogFragmentAdapter;
 import com.ludas.testapp.databinding.ActivityMainBinding;
 import com.ludas.testapp.fragments.CategoryFragment;
 import com.ludas.testapp.fragments.CategoryInfoFragment;
@@ -35,13 +36,15 @@ import com.ludas.testapp.fragments.SettingsFragment;
 import com.ludas.testapp.fragments.StorageFragment;
 import com.ludas.testapp.fragments.StorageInfoFragment;
 import com.ludas.testapp.fragments.StorageInsertFragment;
+import com.ludas.testapp.fragments.StorageLogFragment;
 
 
 public class MainActivity extends AppCompatActivity implements
         HomeFragmentAdapter.OnListClicked,
         CategoryFragmentAdapter.OnListClicked,
         ProductFragmentAdapter.OnListClicked,
-        StorageFragmentAdapter.OnListClicked {
+        StorageFragmentAdapter.OnListClicked,
+        StorageLogFragmentAdapter.OnListClicked {
     public static final String TAG = "MainActivity";
     ActivityMainBinding binding;
     FragmentManager fragmentManager;
@@ -59,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
@@ -102,6 +104,9 @@ public class MainActivity extends AppCompatActivity implements
                 }
                 else if(itemId == R.id.left_nav_menu_storage) {
                     replaceFragment(StorageFragment.newInstance(), StorageFragment.TAG);
+                }
+                else if(itemId == R.id.left_nav_menu_storage_log) {
+                    replaceFragment(StorageLogFragment.newInstance(), StorageLogFragment.TAG);
                 }
 
                 if(drawerLayout.isDrawerOpen(leftNavigationView)) {
@@ -159,6 +164,11 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onStorageSelected(long storageId) {
         replaceWithBackStack(StorageInfoFragment.newInstance(storageId), StorageInfoFragment.TAG);
+    }
+
+    @Override
+    public void onStorageLogSelected(long storageLogId) {
+
     }
 
 

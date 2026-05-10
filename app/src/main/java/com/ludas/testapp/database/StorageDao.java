@@ -31,6 +31,9 @@ public interface StorageDao {
     @Query("SELECT * FROM storage WHERE id_product = :id_product")
     Storage findByProduct(long id_product);
 
+    @Query("SELECT * FROM storage WHERE id_product = :id_product AND quantity = :quantity AND location = :location LIMIT 1")
+    Storage find(long quantity, String location, long id_product);
+
     @Insert
     void insertAll(Storage... storages);
 

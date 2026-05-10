@@ -40,7 +40,7 @@
                 app:titleTextColor="?attr/colorPrimary" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <FrameLayout
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/activity_main_framelayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"

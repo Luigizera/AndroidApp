@@ -21,6 +21,8 @@ import com.ludas.testapp.database.Product;
 import com.ludas.testapp.database.ProductDao;
 import com.ludas.testapp.database.Storage;
 import com.ludas.testapp.database.StorageDao;
+import com.ludas.testapp.database.StorageLog;
+import com.ludas.testapp.database.StorageLogDao;
 
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class StorageInfoFragment extends Fragment {
     private ImageButton imageButtonDelete;
     private Storage storage;
     private StorageDao storageDao;
+    private StorageLogDao storageLogDao;
     private Product storageProduct;
     private List<Product> list;
     private Spinner spinnerProduct;
@@ -60,6 +63,7 @@ public class StorageInfoFragment extends Fragment {
             if(storageId >= 0) {
                 AppDatabase database = AppDatabase.getInstance(getActivity());
                 storageDao = database.storageDao();
+                storageLogDao = database.storageLogDao();
                 storage = storageDao.findById(storageId);
                 if(storage != null) {
                     storageProduct = database
@@ -84,7 +88,8 @@ public class StorageInfoFragment extends Fragment {
             editTextLocation = view.findViewById(R.id.fragment_storage_info_edittext_location);
             editTextLocation.setText(storage.getLocation());
             editTextQuantity = view.findViewById(R.id.fragment_storage_info_edittext_quantity);
-            editTextQuantity.setText(String.valueOf(storage.getQuantity()));
+            int oldQuantity = storage.getQuantity();
+            editTextQuantity.setText(String.valueOf(oldQuantity));
             textViewError = view.findViewById(R.id.fragment_storage_info_textview_error);
             imageButtonSubmit = view.findViewById(R.id.fragment_storage_info_submitbutton);
             imageButtonDelete = view.findViewById(R.id.fragment_storage_info_deletebutton);
@@ -128,6 +133,12 @@ public class StorageInfoFragment extends Fragment {
 
                     textViewError.setVisibility(View.INVISIBLE);
                     storageDao.updateStorages(storage);
+                    int type = 0;
+                    int diff = quantity - oldQuantity;
+                    if(diff < 0) {
+                        type = 1;
+                    }
+                    storageLogDao.insertAll(new StorageLog(diff, type, AppDatabase.getCurrentDate(), storageId));
 
                     Bundle result = new Bundle();
                     result.putBoolean("refresh_key", true);
@@ -160,7 +171,6 @@ public class StorageInfoFragment extends Fragment {
                     dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(R.style.Theme_TestApp);
                 }
             });
-
         }
         return view;
     }

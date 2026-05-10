@@ -52,4 +52,14 @@
     <string name="text_storage_quantity">Storage quantity</string>
     <string name="text_storage_location">Storage location</string>
     <string name="text_storage_product">Storage product</string>
+    <string name="text_storage_log_type_0">In</string>
+    <string name="text_storage_log_type_1">Out</string>
+    <string name="text_storage_log_type_unknown">Unknown</string>
+    <string name="storage_log_info_delete_confirmation">Do you really want to delete this log?</string>
+    <string name="text_storage_log_storage">Select Storage</string>
+    <string name="hint_storage_log_storage">Select the allocation…</string>
+    <string name="text_storage_log_type">Select the Type</string>
+    <string name="hint_storage_log_type">Select the type…</string>
+    <string name="text_storage_log_quantity">Quantity</string>
+    <string name="left_nav_menu_storage_log">Storage Logs</string>
 </resources>

@@ -19,6 +19,8 @@ import com.ludas.testapp.database.Product;
 import com.ludas.testapp.database.ProductDao;
 import com.ludas.testapp.database.Storage;
 import com.ludas.testapp.database.StorageDao;
+import com.ludas.testapp.database.StorageLog;
+import com.ludas.testapp.database.StorageLogDao;
 
 import java.util.List;
 
