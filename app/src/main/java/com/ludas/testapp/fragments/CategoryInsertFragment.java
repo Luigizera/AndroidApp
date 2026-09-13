@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -51,6 +52,14 @@ public class CategoryInsertFragment extends Fragment {
         editTextName = view.findViewById(R.id.fragment_category_insert_edittext_name);
         textViewError = view.findViewById(R.id.fragment_category_insert_textview_error);
         imageButtonSubmit = view.findViewById(R.id.fragment_category_insert_submitbutton);
+
+        Button buttonBack = view.findViewById(R.id.fragment_category_insert_backbutton);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().popBackStack();
+            }
+        });
 
         imageButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override

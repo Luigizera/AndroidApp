@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,14 @@ public class CategoryInfoFragment extends Fragment {
             imageButtonSubmit = view.findViewById(R.id.fragment_category_info_submitbutton);
             imageButtonDelete = view.findViewById(R.id.fragment_category_info_deletebutton);
 
+            Button buttonBack = view.findViewById(R.id.fragment_category_info_backbutton);
+            buttonBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getParentFragmentManager().popBackStack();
+                }
+            });
+
             imageButtonSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -97,7 +106,7 @@ public class CategoryInfoFragment extends Fragment {
             imageButtonDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                    new MaterialAlertDialogBuilder(getActivity())
                             .setTitle(category.getName())
                             .setMessage(R.string.category_info_delete_confirmation)
                             .setIcon(android.R.drawable.ic_dialog_alert)
@@ -111,12 +120,8 @@ public class CategoryInfoFragment extends Fragment {
                                     getParentFragmentManager().setFragmentResult("request_key", result);
                                     getParentFragmentManager().popBackStack();
                                 }})
-                            .setNegativeButton(android.R.string.cancel, null);
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                    //TODO: DESCOBRIR COMO FAZER UM TEMA DECENTE PARA DELETAR ESSE CODIGO ABAIXO
-                    dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(R.style.Theme_TestApp);
-                    dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(R.style.Theme_TestApp);
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .show();
                 }
             });
         }

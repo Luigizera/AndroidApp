@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TestApp</string>
+    <string name="app_name">InABox</string>
     <string name="hint_first_name">First Name</string>
     <string name="hint_last_name">Last Name</string>
     <string name="submit_button">Submit</string>
@@ -23,6 +23,7 @@
     <string name="top_nav_menu_settings">Settings</string>
     <string name="left_nav_menu_test">Test</string>
     <string name="left_nav_menu_title_database">Database</string>
+    <string name="left_nav_menu_title_navigation">Navigation</string>
     <string name="left_nav_menu_category">Category</string>
     <string name="left_nav_menu_home">Home</string>
     <string name="left_nav_menu_add">Add</string>

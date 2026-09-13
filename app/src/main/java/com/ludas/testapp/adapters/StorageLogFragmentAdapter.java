@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ludas.testapp.R;
 import com.ludas.testapp.database.AppDatabase;
 import com.ludas.testapp.database.Product;
@@ -93,7 +94,7 @@ public class StorageLogFragmentAdapter extends RecyclerView.Adapter<StorageLogFr
         viewHolder.recDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext())
+                new MaterialAlertDialogBuilder(view.getContext())
                         .setTitle(storage.getLocation() + " - " +
                                 product.getName() + ": " +
                                 storageLog.getQuantity())
@@ -106,12 +107,8 @@ public class StorageLogFragmentAdapter extends RecyclerView.Adapter<StorageLogFr
                                 storageLogs.remove(pos);
                                 notifyItemRemoved(pos);
                             }})
-                        .setNegativeButton(android.R.string.cancel, null);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                //TODO: DESCOBRIR COMO FAZER UM TEMA DECENTE PARA DELETAR ESSE CODIGO ABAIXO
-                dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(R.style.Theme_TestApp);
-                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(R.style.Theme_TestApp);
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .show();
             }
         });
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

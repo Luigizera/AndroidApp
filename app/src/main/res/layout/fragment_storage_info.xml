@@ -123,6 +123,7 @@
             android:contentDescription="@string/submit_button"
             android:scaleType="center"
             android:src="@drawable/baseline_done_24"
+            app:tint="?attr/colorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_storage_info_edittext_location" />
@@ -139,6 +140,7 @@
             android:contentDescription="@string/delete"
             android:scaleType="center"
             android:src="@drawable/baseline_remove_24"
+            app:tint="?attr/colorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_storage_info_edittext_location" />

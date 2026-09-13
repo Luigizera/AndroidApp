@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,7 +147,7 @@ public class ProductInfoFragment extends Fragment {
             imageButtonDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                    new MaterialAlertDialogBuilder(getActivity())
                             .setTitle(product.getName())
                             .setMessage(R.string.product_info_delete_confirmation)
                             .setIcon(android.R.drawable.ic_dialog_alert)
@@ -160,12 +161,8 @@ public class ProductInfoFragment extends Fragment {
                                     getParentFragmentManager().setFragmentResult("request_key", result);
                                     getParentFragmentManager().popBackStack();
                                 }})
-                            .setNegativeButton(android.R.string.cancel, null);
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                    //TODO: DESCOBRIR COMO FAZER UM TEMA DECENTE PARA DELETAR ESSE CODIGO ABAIXO
-                    dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(R.style.Theme_TestApp);
-                    dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(R.style.Theme_TestApp);
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .show();
                 }
             });
         }

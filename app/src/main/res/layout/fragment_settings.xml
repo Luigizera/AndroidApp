@@ -1,13 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorSecondary"
+    android:padding="16dp"
     tools:context=".fragments.SettingsFragment">
 
     <TextView
+        android:id="@+id/settings_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Configurações"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/theme_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Tema do Aplicativo"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/settings_title" />
+
+    <RadioGroup
+        android:id="@+id/theme_radio_group"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Text" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/theme_label">
+
+        <RadioButton
+            android:id="@+id/radio_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Claro"
+            android:textColor="?attr/colorPrimary"
+            android:buttonTint="?attr/colorPrimary"/>
+
+        <RadioButton
+            android:id="@+id/radio_dark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Escuro"
+            android:textColor="?attr/colorPrimary"
+            android:buttonTint="?attr/colorPrimary"/>
+
+        <RadioButton
+            android:id="@+id/radio_system"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Padrão do Sistema"
+            android:textColor="?attr/colorPrimary"
+            android:buttonTint="?attr/colorPrimary"/>
+
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

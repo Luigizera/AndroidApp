@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ludas.testapp.R;
 import com.ludas.testapp.database.AppDatabase;
 import com.ludas.testapp.database.Category;
@@ -138,7 +139,7 @@ public class StorageInfoFragment extends Fragment {
                     if(diff < 0) {
                         type = 1;
                     }
-                    storageLogDao.insertAll(new StorageLog(diff, type, AppDatabase.getCurrentDate(), storageId));
+                    storageLogDao.insertAll(new StorageLog(Math.abs(diff), type, AppDatabase.getCurrentDate(), storageId));
 
                     Bundle result = new Bundle();
                     result.putBoolean("refresh_key", true);
@@ -150,7 +151,7 @@ public class StorageInfoFragment extends Fragment {
             imageButtonDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                    new MaterialAlertDialogBuilder(getActivity())
                             .setMessage(R.string.storage_info_delete_confirmation)
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -163,12 +164,8 @@ public class StorageInfoFragment extends Fragment {
                                     getParentFragmentManager().setFragmentResult("request_key", result);
                                     getParentFragmentManager().popBackStack();
                                 }})
-                            .setNegativeButton(android.R.string.cancel, null);
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                    //TODO: DESCOBRIR COMO FAZER UM TEMA DECENTE PARA DELETAR ESSE CODIGO ABAIXO
-                    dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(R.style.Theme_TestApp);
-                    dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(R.style.Theme_TestApp);
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .show();
                 }
             });
         }

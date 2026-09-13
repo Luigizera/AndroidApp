@@ -1,6 +1,8 @@
 package com.ludas.testapp;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.View;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -62,6 +65,10 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences prefs = getSharedPreferences("theme_prefs", Context.MODE_PRIVATE);
+        int savedTheme = prefs.getInt("selected_theme", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        AppCompatDelegate.setDefaultNightMode(savedTheme);
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
@@ -80,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements
         leftNavigationView.bringToFront();
 
         if(savedInstanceState == null) {
-            addFragment(StorageFragment.newInstance(), HomeFragment.TAG);
+            addFragment(HomeFragment.newInstance(), HomeFragment.TAG);
         }
         binding.activityMainAppbarlayoutToolbar.setOnMenuItemClickListener(item -> {
             int itemId = item.getItemId();
@@ -96,8 +103,11 @@ public class MainActivity extends AppCompatActivity implements
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
 
-                if (itemId == R.id.left_nav_menu_category) {
-                    replaceFragment(CategoryFragment.newInstance(), CategoryFragment.TAG);
+                if (itemId == R.id.left_nav_menu_home) {
+                    replaceFragment(HomeFragment.newInstance(), HomeFragment.TAG);
+                }
+                else if (itemId == R.id.left_nav_menu_category) {
+                    replaceFragment(CategoryFragment.newInstance(1), CategoryFragment.TAG);
                 }
                 else if(itemId == R.id.left_nav_menu_product) {
                     replaceFragment(ProductFragment.newInstance(), ProductFragment.TAG);
@@ -142,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.activity_main_framelayout, fragment, tag)
-                .addToBackStack(tag)
+                .addToBackStack(null)
                 .commit();
     }
 
