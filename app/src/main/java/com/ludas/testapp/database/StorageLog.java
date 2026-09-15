@@ -11,7 +11,7 @@ import java.util.Objects;
 @Entity(tableName = "storage_log", foreignKeys = {@ForeignKey(entity = Storage.class,
         parentColumns = "id_storage",
         childColumns = "id_storage",
-        onDelete = ForeignKey.CASCADE,
+        onDelete = ForeignKey.RESTRICT,
         onUpdate = ForeignKey.CASCADE)
 })
 public class StorageLog {

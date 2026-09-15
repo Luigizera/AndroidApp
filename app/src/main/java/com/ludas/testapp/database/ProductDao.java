@@ -13,6 +13,24 @@ public interface ProductDao {
     @Query("SELECT * FROM products")
     List<Product> getAll();
 
+    @Query("SELECT * FROM products LIMIT :limit OFFSET :offset")
+    List<Product> getPaged(int limit, int offset);
+
+    @Query("SELECT * FROM products WHERE name LIKE '%' || :search || '%' LIMIT :limit OFFSET :offset")
+    List<Product> searchByNamePaged(String search, int limit, int offset);
+
+    @Query("SELECT * FROM products WHERE id_product LIKE '%' || :search || '%' LIMIT :limit OFFSET :offset")
+    List<Product> searchByIdPaged(String search, int limit, int offset);
+
+    @Query("SELECT COUNT(*) FROM products")
+    int count();
+
+    @Query("SELECT COUNT(*) FROM products WHERE name LIKE '%' || :search || '%'")
+    int countSearchByName(String search);
+
+    @Query("SELECT COUNT(*) FROM products WHERE id_product LIKE '%' || :search || '%'")
+    int countSearchById(String search);
+
     @Query("SELECT * FROM products WHERE id_product IN (:ids)")
     List<Product> loadAllByIds(long[] ids);
 
@@ -22,8 +40,8 @@ public interface ProductDao {
     @Query("SELECT * FROM products WHERE id_product = :id")
     Product findById(long id);
 
-    @Query("SELECT * FROM products WHERE id_category = :id_category")
-    Product findByCategory(long id_category);
+    @Insert
+    long insert(Product product);
 
     @Insert
     void insertAll(Product... products);

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -41,9 +42,14 @@ public class SettingsFragment extends Fragment {
         RadioButton radioDark = view.findViewById(R.id.radio_dark);
         RadioButton radioSystem = view.findViewById(R.id.radio_system);
 
-        SharedPreferences prefs = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        int savedTheme = prefs.getInt(KEY_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        RadioGroup languageRadioGroup = view.findViewById(R.id.language_radio_group);
+        RadioButton radioLangEn = view.findViewById(R.id.radio_lang_en);
+        RadioButton radioLangPt = view.findViewById(R.id.radio_lang_pt);
 
+        SharedPreferences prefs = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        
+        // Theme selection logic
+        int savedTheme = prefs.getInt(KEY_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         if (savedTheme == AppCompatDelegate.MODE_NIGHT_NO) {
             radioLight.setChecked(true);
         } else if (savedTheme == AppCompatDelegate.MODE_NIGHT_YES) {
@@ -64,6 +70,26 @@ public class SettingsFragment extends Fragment {
 
             AppCompatDelegate.setDefaultNightMode(mode);
             prefs.edit().putInt(KEY_THEME, mode).apply();
+        });
+
+        // Language selection logic
+        String currentLang = AppCompatDelegate.getApplicationLocales().toLanguageTags();
+        if (currentLang.startsWith("pt")) {
+            radioLangPt.setChecked(true);
+        } else {
+            radioLangEn.setChecked(true);
+        }
+
+        languageRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            String localeTag;
+            if (checkedId == R.id.radio_lang_pt) {
+                localeTag = "pt-BR";
+            } else {
+                localeTag = "en";
+            }
+
+            LocaleListCompat appLocales = LocaleListCompat.forLanguageTags(localeTag);
+            AppCompatDelegate.setApplicationLocales(appLocales);
         });
 
         return view;

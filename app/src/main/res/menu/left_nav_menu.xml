@@ -12,6 +12,12 @@
                     android:title="@string/left_nav_menu_home"
                     android:contentDescription="@string/left_nav_menu_home">
                 </item>
+                <item
+                    android:id="@+id/left_nav_menu_graph"
+                    android:icon="@drawable/outline_all_inbox_24"
+                    android:title="@string/left_nav_menu_graph"
+                    android:contentDescription="@string/left_nav_menu_graph">
+                </item>
             </menu>
         </item>
         <item

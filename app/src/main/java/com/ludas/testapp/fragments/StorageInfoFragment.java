@@ -151,6 +151,15 @@ public class StorageInfoFragment extends Fragment {
             imageButtonDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    int logCount = storageLogDao.countByStorageId(storageId);
+                    if (logCount > 0) {
+                        new MaterialAlertDialogBuilder(getActivity())
+                                .setMessage(R.string.error_delete_storage_has_logs)
+                                .setPositiveButton(android.R.string.ok, null)
+                                .show();
+                        return;
+                    }
+
                     new MaterialAlertDialogBuilder(getActivity())
                             .setMessage(R.string.storage_info_delete_confirmation)
                             .setIcon(android.R.drawable.ic_dialog_alert)

@@ -20,6 +20,7 @@ import com.ludas.testapp.database.Product;
 import com.ludas.testapp.database.ProductDao;
 import com.ludas.testapp.database.Storage;
 import com.ludas.testapp.database.StorageDao;
+import com.ludas.testapp.database.StorageLogDao;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class StorageFragmentAdapter extends RecyclerView.Adapter<StorageFragment
     private AppDatabase database;
     private ProductDao productDao;
     private StorageDao storageDao;
+    private StorageLogDao storageLogDao;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         protected final TextView recProductName, recQuantity, recLocation;
@@ -60,6 +62,7 @@ public class StorageFragmentAdapter extends RecyclerView.Adapter<StorageFragment
         database = AppDatabase.getInstance(view.getContext());
         productDao = database.productDao();
         storageDao = database.storageDao();
+        storageLogDao = database.storageLogDao();
         return new ViewHolder(view);
     }
 
@@ -75,6 +78,16 @@ public class StorageFragmentAdapter extends RecyclerView.Adapter<StorageFragment
         viewHolder.recDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int logCount = storageLogDao.countByStorageId(storage.getId_storage());
+                if (logCount > 0) {
+                    new MaterialAlertDialogBuilder(view.getContext())
+                            .setTitle(storage.getLocation() + " - " + productDao.findById(storage.getId_product()).getName())
+                            .setMessage(R.string.error_delete_storage_has_logs)
+                            .setPositiveButton(android.R.string.ok, null)
+                            .show();
+                    return;
+                }
+
                 new MaterialAlertDialogBuilder(view.getContext())
                         .setTitle(storage.getLocation() + " - " +
                                 productDao.findById(storage.getId_product()).getName() + ": " +

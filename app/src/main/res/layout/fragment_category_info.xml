@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="Voltar"
+            android:text="@string/button_back"
             android:textColor="?attr/colorSecondary"
             android:backgroundTint="?attr/colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,13 +68,58 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_category_info_textview_error" />
 
+        <TextView
+            android:id="@+id/fragment_category_info_textview_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/text_category_color"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_category_info_edittext_name" />
+
+        <LinearLayout
+            android:id="@+id/fragment_category_info_color_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_category_info_textview_color">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/fragment_category_info_edittext_color"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/hint_category_color"
+                android:inputType="text"
+                android:maxLength="7"
+                android:textColor="?attr/colorPrimary"
+                android:textColorHint="?attr/colorPrimaryDark"
+                app:backgroundTint="?attr/colorPrimaryDark" />
+
+            <View
+                android:id="@+id/fragment_category_info_color_preview"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                android:background="@android:color/black" />
+
+        </LinearLayout>
+
         <ImageButton
             android:id="@+id/fragment_category_info_submitbutton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
-            android:layout_marginTop="373dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/rounded_background"
             android:backgroundTint="?attr/colorPrimary"
             android:contentDescription="@string/submit_button"
@@ -83,7 +128,7 @@
             app:tint="?attr/colorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_category_info_edittext_name" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_category_info_color_container" />
 
         <ImageButton
             android:id="@+id/fragment_category_info_deletebutton"
@@ -91,7 +136,7 @@
             android:layout_height="50dp"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
-            android:layout_marginTop="373dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/rounded_background"
             android:backgroundTint="?attr/colorError"
             android:contentDescription="@string/delete"
@@ -100,7 +145,7 @@
             app:tint="?attr/colorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_category_info_edittext_name" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_category_info_color_container" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

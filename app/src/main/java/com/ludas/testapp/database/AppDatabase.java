@@ -13,7 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-@Database(entities = {User.class, Category.class, Product.class, Storage.class, StorageLog.class}, version = 1)
+@Database(entities = {User.class, Category.class, Product.class, Storage.class, StorageLog.class, ProductCategoryCrossRef.class}, version = 5)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
     public abstract UserDao userDao();
@@ -21,11 +21,13 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ProductDao productDao();
     public abstract StorageDao storageDao();
     public abstract StorageLogDao storageLogDao();
+    public abstract ProductCategoryDao productCategoryDao();
 
     public static synchronized AppDatabase getInstance(Context context) {
         if(instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     AppDatabase.class, "database-str")
+                    .fallbackToDestructiveMigration()
                     .allowMainThreadQueries()
                     .build();
         }

@@ -29,6 +29,7 @@ import com.ludas.testapp.databinding.ActivityMainBinding;
 import com.ludas.testapp.fragments.CategoryFragment;
 import com.ludas.testapp.fragments.CategoryInfoFragment;
 import com.ludas.testapp.fragments.CategoryInsertFragment;
+import com.ludas.testapp.fragments.GraphFragment;
 import com.ludas.testapp.fragments.HomeFragment;
 import com.ludas.testapp.fragments.ProductFragment;
 import com.ludas.testapp.fragments.ProductInfoFragment;
@@ -105,6 +106,9 @@ public class MainActivity extends AppCompatActivity implements
 
                 if (itemId == R.id.left_nav_menu_home) {
                     replaceFragment(HomeFragment.newInstance(), HomeFragment.TAG);
+                }
+                else if (itemId == R.id.left_nav_menu_graph) {
+                    replaceFragment(GraphFragment.newInstance(), GraphFragment.TAG);
                 }
                 else if (itemId == R.id.left_nav_menu_category) {
                     replaceFragment(CategoryFragment.newInstance(1), CategoryFragment.TAG);

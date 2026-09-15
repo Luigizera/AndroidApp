@@ -30,11 +30,11 @@ public interface CategoryDao {
     @Query("SELECT COUNT(*) FROM categories WHERE name LIKE '%' || :search || '%'")
     int countSearch(String search);
 
-    @Query("SELECT * FROM categories WHERE id_category = :id LIMIT :limit OFFSET :offset")
-    List<Category> searchByIdPaged(long id, int limit, int offset);
+    @Query("SELECT * FROM categories WHERE id_category LIKE '%' || :search || '%' LIMIT :limit OFFSET :offset")
+    List<Category> searchByIdPaged(String search, int limit, int offset);
 
-    @Query("SELECT COUNT(*) FROM categories WHERE id_category = :id")
-    int countSearchById(long id);
+    @Query("SELECT COUNT(*) FROM categories WHERE id_category LIKE '%' || :search || '%'")
+    int countSearchById(String search);
 
     @Query("DELETE FROM categories WHERE id_category IN (:id)")
     void deleteById(long id);

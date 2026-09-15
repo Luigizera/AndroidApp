@@ -111,24 +111,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_edittext_description" />
 
-
         <TextView
-            android:id="@+id/fragment_product_info_textview_category"
+            android:id="@+id/fragment_product_info_textview_purchase_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:ems="10"
-            android:text="@string/text_product_category"
+            android:text="@string/text_product_purchase_price"
             android:textColor="?attr/colorPrimary"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_product_info_id_category"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_product_info_edittext_purchase_price"
             app:layout_constraintStart_toStartOf="parent" />
-        <Spinner
-            android:id="@+id/fragment_product_info_id_category"
-            android:autofillHints="@string/hint_product_category"
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fragment_product_info_edittext_purchase_price"
+            android:autofillHints="@string/hint_product_purchase_price"
+            android:inputType="numberDecimal"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/hint_product_category"
+            android:hint="@string/hint_product_purchase_price"
             android:textColorHint="?attr/colorPrimary"
             android:textColor="?attr/colorPrimary"
             android:layout_marginTop="48dp"
@@ -139,13 +139,80 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_edittext_price" />
 
+        <TextView
+            android:id="@+id/fragment_product_info_textview_min_stock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:ems="10"
+            android:text="@string/text_product_min_stock"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_product_info_edittext_min_stock"
+            app:layout_constraintStart_toStartOf="parent" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fragment_product_info_edittext_min_stock"
+            android:autofillHints="@string/hint_product_min_stock"
+            android:inputType="number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/hint_product_min_stock"
+            android:textColorHint="?attr/colorPrimary"
+            android:textColor="?attr/colorPrimary"
+            android:layout_marginTop="48dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            app:backgroundTint="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_edittext_purchase_price" />
+
+
+        <TextView
+            android:id="@+id/fragment_product_info_textview_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:ems="10"
+            android:text="@string/text_product_category"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_product_info_button_select_categories"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/fragment_product_info_button_select_categories"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="48dp"
+            android:text="@string/select_categories"
+            android:textColor="?attr/colorSecondary"
+            android:backgroundTint="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_edittext_min_stock" />
+
+        <TextView
+            android:id="@+id/fragment_product_info_textview_selected_categories"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/no_categories_selected"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_button_select_categories" />
+
         <ImageButton
             android:id="@+id/fragment_product_info_submitbutton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
-            android:layout_marginTop="373dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/rounded_background"
             android:backgroundTint="?attr/colorPrimary"
             android:contentDescription="@string/submit_button"
@@ -154,7 +221,7 @@
             app:tint="?attr/colorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_id_category" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_textview_selected_categories" />
 
         <ImageButton
             android:id="@+id/fragment_product_info_deletebutton"
@@ -162,7 +229,7 @@
             android:layout_height="50dp"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
-            android:layout_marginTop="373dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/rounded_background"
             android:backgroundTint="?attr/colorError"
             android:contentDescription="@string/delete"
@@ -171,7 +238,7 @@
             app:tint="?attr/colorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_id_category" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_product_info_textview_selected_categories" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

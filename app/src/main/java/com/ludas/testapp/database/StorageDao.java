@@ -13,6 +13,24 @@ public interface StorageDao {
     @Query("SELECT * FROM storage")
     List<Storage> getAll();
 
+    @Query("SELECT * FROM storage LIMIT :limit OFFSET :offset")
+    List<Storage> getPaged(int limit, int offset);
+
+    @Query("SELECT * FROM storage WHERE location LIKE '%' || :search || '%' LIMIT :limit OFFSET :offset")
+    List<Storage> searchByLocationPaged(String search, int limit, int offset);
+
+    @Query("SELECT * FROM storage WHERE id_storage LIKE '%' || :search || '%' LIMIT :limit OFFSET :offset")
+    List<Storage> searchByIdPaged(String search, int limit, int offset);
+
+    @Query("SELECT COUNT(*) FROM storage")
+    int count();
+
+    @Query("SELECT COUNT(*) FROM storage WHERE location LIKE '%' || :search || '%'")
+    int countSearchByLocation(String search);
+
+    @Query("SELECT COUNT(*) FROM storage WHERE id_storage LIKE '%' || :search || '%'")
+    int countSearchById(String search);
+
     @Query("SELECT * FROM storage WHERE id_storage IN (:ids)")
     List<Storage> loadAllByIds(long[] ids);
 
@@ -30,6 +48,9 @@ public interface StorageDao {
 
     @Query("SELECT * FROM storage WHERE id_product = :id_product")
     Storage findByProduct(long id_product);
+
+    @Query("SELECT COUNT(*) FROM storage WHERE id_product = :productId")
+    int countByProductId(long productId);
 
     @Query("SELECT * FROM storage WHERE id_product = :id_product AND quantity = :quantity AND location = :location LIMIT 1")
     Storage find(long quantity, String location, long id_product);

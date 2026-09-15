@@ -186,7 +186,7 @@ public class CategoryFragment extends Fragment {
 
 
     private void setupFilterSpinner() {
-        String[] filters = {"Nome", "ID"};
+        String[] filters = {getString(R.string.filter_name), getString(R.string.filter_id)};
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_spinner_item, filters);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -229,14 +229,8 @@ public class CategoryFragment extends Fragment {
             } else {
                 String searchStr = currentSearchText.trim();
                 if (currentFilterPosition == 1) { // Search by ID
-                    try {
-                        long searchId = Long.parseLong(searchStr);
-                        totalItems = categoryDao.countSearchById(searchId);
-                        resultado = categoryDao.searchByIdPaged(searchId, limit, offset);
-                    } catch (NumberFormatException e) {
-                        totalItems = 0;
-                        resultado = new ArrayList<>();
-                    }
+                    totalItems = categoryDao.countSearchById(searchStr);
+                    resultado = categoryDao.searchByIdPaged(searchStr, limit, offset);
                 } else { // Search by Name
                     totalItems = categoryDao.countSearch(searchStr);
                     resultado = categoryDao.searchPaged(searchStr, limit, offset);

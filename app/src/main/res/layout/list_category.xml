@@ -17,11 +17,20 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp">
 
+        <View
+            android:id="@+id/category_recview_color_indicator"
+            android:layout_width="8dp"
+            android:layout_height="0dp"
+            android:background="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/category_recview_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="16dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Category Name"
@@ -29,7 +38,7 @@
             android:textStyle="bold"
             android:textColor="?attr/colorPrimary"
             app:layout_constraintEnd_toStartOf="@+id/category_recview_delete"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/category_recview_color_indicator"
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/category_recview_id"

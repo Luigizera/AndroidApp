@@ -2,6 +2,7 @@ package com.ludas.testapp.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.ludas.testapp.R;
 import com.ludas.testapp.database.AppDatabase;
 import com.ludas.testapp.database.Category;
 import com.ludas.testapp.database.CategoryDao;
+import com.ludas.testapp.database.ProductCategoryDao;
 
 import java.util.List;
 
@@ -26,11 +28,13 @@ public class CategoryFragmentAdapter extends RecyclerView.Adapter<CategoryFragme
     private List<Category> categories;
     private AppDatabase database;
     private CategoryDao categoryDao;
+    private ProductCategoryDao productCategoryDao;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         protected final TextView recId;
         protected final TextView recName;
         protected final ImageButton recDelete;
+        protected final View recColorIndicator;
 
         public ViewHolder(View view) {
             super(view);
@@ -38,6 +42,7 @@ public class CategoryFragmentAdapter extends RecyclerView.Adapter<CategoryFragme
             recId = (TextView) view.findViewById(R.id.category_recview_id);
             recName = (TextView) view.findViewById(R.id.category_recview_name);
             recDelete = (ImageButton) view.findViewById(R.id.category_recview_delete);
+            recColorIndicator = view.findViewById(R.id.category_recview_color_indicator);
         }
     }
 
@@ -56,6 +61,7 @@ public class CategoryFragmentAdapter extends RecyclerView.Adapter<CategoryFragme
                 .inflate(R.layout.list_category, viewGroup, false);
         database = AppDatabase.getInstance(view.getContext());
         categoryDao = database.categoryDao();
+        productCategoryDao = database.productCategoryDao();
         return new ViewHolder(view);
     }
 
@@ -64,10 +70,27 @@ public class CategoryFragmentAdapter extends RecyclerView.Adapter<CategoryFragme
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         Category category = categories.get(position);
         viewHolder.recId.setText(String.valueOf(category.getId_category()));
-        viewHolder.recName.setText(categories.get(position).getName());
+        viewHolder.recName.setText(category.getName());
+        
+        try {
+            viewHolder.recColorIndicator.setBackgroundColor(Color.parseColor(category.getColor()));
+        } catch (Exception e) {
+            viewHolder.recColorIndicator.setBackgroundColor(Color.BLACK);
+        }
+
         viewHolder.recDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int productCount = productCategoryDao.countProductsForCategory(category.getId_category());
+                if (productCount > 0) {
+                    new MaterialAlertDialogBuilder(view.getContext())
+                            .setTitle(category.getName())
+                            .setMessage(R.string.error_delete_category_has_products)
+                            .setPositiveButton(android.R.string.ok, null)
+                            .show();
+                    return;
+                }
+
                 new MaterialAlertDialogBuilder(view.getContext())
                         .setTitle(category.getName())
                         .setMessage(R.string.category_info_delete_confirmation)

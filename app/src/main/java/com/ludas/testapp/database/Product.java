@@ -3,17 +3,11 @@ package com.ludas.testapp.database;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.util.Objects;
 
-@Entity(tableName = "products", foreignKeys = {@ForeignKey(entity = Category.class,
-        parentColumns = "id_category",
-        childColumns = "id_category",
-        onDelete = ForeignKey.CASCADE,
-        onUpdate = ForeignKey.CASCADE)
-})
+@Entity(tableName = "products")
 public class Product {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_product")
@@ -27,14 +21,18 @@ public class Product {
     @ColumnInfo(name = "price")
     private double price;
 
-    @ColumnInfo(name = "id_category")
-    private long id_category;
+    @ColumnInfo(name = "purchase_price")
+    private double purchasePrice;
 
-    public Product(String name, String description, double price, long id_category) {
+    @ColumnInfo(name = "min_stock_level")
+    private int minStockLevel;
+
+    public Product(String name, String description, double price, double purchasePrice, int minStockLevel) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.id_category = id_category;
+        this.purchasePrice = purchasePrice;
+        this.minStockLevel = minStockLevel;
     }
 
     public long getId_product() {
@@ -69,12 +67,20 @@ public class Product {
         this.price = price;
     }
 
-    public long getId_category() {
-        return id_category;
+    public double getPurchasePrice() {
+        return purchasePrice;
     }
 
-    public void setId_category(long id_category) {
-        this.id_category = id_category;
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+
+    public int getMinStockLevel() {
+        return minStockLevel;
+    }
+
+    public void setMinStockLevel(int minStockLevel) {
+        this.minStockLevel = minStockLevel;
     }
 
     @NonNull
@@ -87,11 +93,15 @@ public class Product {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return id_product == product.id_product && Double.compare(price, product.price) == 0 && id_category == product.id_category && Objects.equals(name, product.name) && Objects.equals(description, product.description);
+        return id_product == product.id_product && Double.compare(price, product.price) == 0 && 
+                Double.compare(purchasePrice, product.purchasePrice) == 0 && 
+                minStockLevel == product.minStockLevel && 
+                Objects.equals(name, product.name) && 
+                Objects.equals(description, product.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_product, name, description, price, id_category);
+        return Objects.hash(id_product, name, description, price, purchasePrice, minStockLevel);
     }
 }

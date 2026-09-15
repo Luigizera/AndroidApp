@@ -16,15 +16,26 @@ public class Category {
     @ColumnInfo(name = "name")
     private String name;
 
-    public Category(String name) {
+    @ColumnInfo(name = "color")
+    private String color;
+
+    public Category(String name, String color) {
         this.name = name;
+        this.color = color;
     }
 
     public String getName() { return name; }
 
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public long getId_category() {
@@ -45,11 +56,11 @@ public class Category {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return id_category == category.id_category && Objects.equals(name, category.name);
+        return id_category == category.id_category && Objects.equals(name, category.name) && Objects.equals(color, category.color);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_category, name);
+        return Objects.hash(id_category, name, color);
     }
 }

@@ -3,26 +3,29 @@ package com.ludas.testapp.fragments;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ludas.testapp.R;
 import com.ludas.testapp.database.AppDatabase;
 import com.ludas.testapp.database.Category;
-import com.ludas.testapp.database.CategoryDao;
 import com.ludas.testapp.database.Product;
+import com.ludas.testapp.database.ProductCategoryCrossRef;
+import com.ludas.testapp.database.ProductCategoryDao;
 import com.ludas.testapp.database.ProductDao;
+import com.ludas.testapp.database.StorageDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductInfoFragment extends Fragment {
@@ -30,16 +33,20 @@ public class ProductInfoFragment extends Fragment {
     public static final String TAG = "ProductInfoFragment";
     private static final String ARG_PRODUCTID = "productId";
     private long productId;
-    private EditText editTextName, editTextDescription, editTextPrice;
-    private TextView textViewError;
+    private EditText editTextName, editTextDescription, editTextPrice, editTextPurchasePrice, editTextMinStock;
+    private TextView textViewError, textViewSelectedCategories;
     private ImageButton imageButtonSubmit;
     private ImageButton imageButtonDelete;
+    private Button buttonSelectCategories;
+
     private Product product;
     private ProductDao productDao;
-    private Category productCategory;
-    private List<Category> list;
-    private Spinner spinnerCategory;
-    private ArrayAdapter<Category> spinnerAdapter;
+    private ProductCategoryDao productCategoryDao;
+    private StorageDao storageDao;
+
+    private List<Category> allCategories;
+    private boolean[] checkedCategories;
+    private List<Category> selectedCategories = new ArrayList<>();
 
     public ProductInfoFragment() {
         // Required empty public constructor
@@ -61,16 +68,22 @@ public class ProductInfoFragment extends Fragment {
             if(productId >= 0) {
                 AppDatabase database = AppDatabase.getInstance(getActivity());
                 productDao = database.productDao();
+                productCategoryDao = database.productCategoryDao();
+                storageDao = database.storageDao();
                 product = productDao.findById(productId);
+                allCategories = database.categoryDao().getAll();
+                
                 if(product != null) {
-                    productCategory = database
-                            .categoryDao().findById(product.getId_category());
-                    list = database.categoryDao().getAll();
-                    spinnerAdapter = new ArrayAdapter<>(
-                            getActivity(),
-                            android.R.layout.simple_spinner_item,
-                            list
-                    );
+                    selectedCategories = productCategoryDao.getCategoriesForProduct(productId);
+                    checkedCategories = new boolean[allCategories.size()];
+                    for (int i = 0; i < allCategories.size(); i++) {
+                        for (Category selected : selectedCategories) {
+                            if (selected.getId_category() == allCategories.get(i).getId_category()) {
+                                checkedCategories[i] = true;
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -87,66 +100,86 @@ public class ProductInfoFragment extends Fragment {
             editTextDescription.setText(product.getDescription());
             editTextPrice = view.findViewById(R.id.fragment_product_info_edittext_price);
             editTextPrice.setText(String.valueOf(product.getPrice()));
+            editTextPurchasePrice = view.findViewById(R.id.fragment_product_info_edittext_purchase_price);
+            editTextPurchasePrice.setText(String.valueOf(product.getPurchasePrice()));
+            editTextMinStock = view.findViewById(R.id.fragment_product_info_edittext_min_stock);
+            editTextMinStock.setText(String.valueOf(product.getMinStockLevel()));
+            
             textViewError = view.findViewById(R.id.fragment_product_info_textview_error);
+            textViewSelectedCategories = view.findViewById(R.id.fragment_product_info_textview_selected_categories);
             imageButtonSubmit = view.findViewById(R.id.fragment_product_info_submitbutton);
             imageButtonDelete = view.findViewById(R.id.fragment_product_info_deletebutton);
-            spinnerCategory = view.findViewById(R.id.fragment_product_info_id_category);
-            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            int pos = spinnerAdapter.getPosition(productCategory);
-            spinnerCategory.setAdapter(spinnerAdapter);
-            spinnerCategory.setSelection(pos);
+            buttonSelectCategories = view.findViewById(R.id.fragment_product_info_button_select_categories);
 
+            updateSelectedCategoriesText();
+
+            buttonSelectCategories.setOnClickListener(v -> showCategorySelectionDialog());
 
             imageButtonSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(spinnerCategory.getSelectedItem() == null) {
-                        textViewError.setVisibility(View.VISIBLE);
-                        textViewError.setText(R.string.error_empty_category_spinner);
-                        return;
-                    }
                     if(editTextName.getText().toString().isEmpty()) {
-                        textViewError.setVisibility(View.VISIBLE);
-                        textViewError.setText(R.string.error_empty_name);
+                        showError(R.string.error_empty_name);
                         return;
                     }
                     if(editTextDescription.getText().toString().isEmpty()) {
-                        textViewError.setVisibility(View.VISIBLE);
-                        textViewError.setText(R.string.error_empty_description);
+                        showError(R.string.error_empty_description);
                         return;
                     }
                     if(editTextPrice.getText().toString().isEmpty()) {
-                        textViewError.setVisibility(View.VISIBLE);
-                        textViewError.setText(R.string.error_empty_price);
+                        showError(R.string.error_empty_price);
                         return;
                     }
-                    double price;
+                    if(selectedCategories.isEmpty()) {
+                        showError(R.string.error_empty_category_spinner);
+                        return;
+                    }
+                    
                     try {
-                        price = Double.parseDouble(editTextPrice.getText().toString());
-                    } catch (Exception e) {
-                        textViewError.setVisibility(View.VISIBLE);
-                        textViewError.setText(R.string.error_convert_price);
-                        return;
+                        double price = Double.parseDouble(editTextPrice.getText().toString());
+                        double purchasePrice = Double.parseDouble(editTextPurchasePrice.getText().toString().isEmpty() ? "0" : editTextPurchasePrice.getText().toString());
+                        int minStock = Integer.parseInt(editTextMinStock.getText().toString().isEmpty() ? "0" : editTextMinStock.getText().toString());
+
+                        product.setName(editTextName.getText().toString());
+                        product.setDescription(editTextDescription.getText().toString());
+                        product.setPrice(price);
+                        product.setPurchasePrice(purchasePrice);
+                        product.setMinStockLevel(minStock);
+
+                        textViewError.setVisibility(View.INVISIBLE);
+                        productDao.updateProducts(product);
+                        
+                        // Update links
+                        productCategoryDao.deleteByProductId(productId);
+                        List<ProductCategoryCrossRef> crossRefs = new ArrayList<>();
+                        for (Category cat : selectedCategories) {
+                            crossRefs.add(new ProductCategoryCrossRef(productId, cat.getId_category()));
+                        }
+                        productCategoryDao.insertAll(crossRefs);
+
+                        Bundle result = new Bundle();
+                        result.putBoolean("refresh_key", true);
+                        getParentFragmentManager().setFragmentResult("request_key", result);
+                        getParentFragmentManager().popBackStack();
+                    } catch (NumberFormatException e) {
+                        showError(R.string.error_convert_price);
                     }
-                    product.setName(editTextName.getText().toString());
-                    product.setDescription(editTextDescription.getText().toString());
-                    product.setPrice(price);
-                    Category category = (Category) spinnerCategory.getSelectedItem();
-                    product.setId_category(category.getId_category());
-
-                    textViewError.setVisibility(View.INVISIBLE);
-                    productDao.updateProducts(product);
-
-                    Bundle result = new Bundle();
-                    result.putBoolean("refresh_key", true);
-                    getParentFragmentManager().setFragmentResult("request_key", result);
-                    getParentFragmentManager().popBackStack();
                 }
             });
 
             imageButtonDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    int storageCount = storageDao.countByProductId(productId);
+                    if (storageCount > 0) {
+                        new MaterialAlertDialogBuilder(getActivity())
+                                .setTitle(product.getName())
+                                .setMessage(R.string.error_delete_product_has_storage)
+                                .setPositiveButton(android.R.string.ok, null)
+                                .show();
+                        return;
+                    }
+
                     new MaterialAlertDialogBuilder(getActivity())
                             .setTitle(product.getName())
                             .setMessage(R.string.product_info_delete_confirmation)
@@ -168,5 +201,45 @@ public class ProductInfoFragment extends Fragment {
         }
 
         return view;
+    }
+    
+    private void showCategorySelectionDialog() {
+        String[] categoryNames = new String[allCategories.size()];
+        for (int i = 0; i < allCategories.size(); i++) {
+            categoryNames[i] = allCategories.get(i).getName();
+        }
+
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.select_categories)
+                .setMultiChoiceItems(categoryNames, checkedCategories, (dialog, which, isChecked) -> checkedCategories[which] = isChecked)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    selectedCategories.clear();
+                    for (int i = 0; i < checkedCategories.length; i++) {
+                        if (checkedCategories[i]) {
+                            selectedCategories.add(allCategories.get(i));
+                        }
+                    }
+                    updateSelectedCategoriesText();
+                })
+                .setNegativeButton(R.string.button_cancel, null)
+                .show();
+    }
+    
+    private void updateSelectedCategoriesText() {
+        StringBuilder sb = new StringBuilder();
+        for (Category cat : selectedCategories) {
+            if (sb.length() > 0) sb.append(", ");
+            sb.append(cat.getName());
+        }
+        if (sb.length() > 0) {
+            textViewSelectedCategories.setText(sb.toString());
+        } else {
+            textViewSelectedCategories.setText(R.string.no_categories_selected);
+        }
+    }
+
+    private void showError(int resId) {
+        textViewError.setVisibility(View.VISIBLE);
+        textViewError.setText(resId);
     }
 }

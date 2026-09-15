@@ -12,7 +12,7 @@
         android:id="@+id/settings_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Configurações"
+        android:text="@string/settings_title"
         android:textColor="?attr/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Tema do Aplicativo"
+        android:text="@string/theme_label"
         android:textColor="?attr/colorPrimary"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
             android:id="@+id/radio_light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Claro"
+            android:text="@string/theme_light"
             android:textColor="?attr/colorPrimary"
             android:buttonTint="?attr/colorPrimary"/>
 
@@ -50,7 +50,7 @@
             android:id="@+id/radio_dark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Escuro"
+            android:text="@string/theme_dark"
             android:textColor="?attr/colorPrimary"
             android:buttonTint="?attr/colorPrimary"/>
 
@@ -58,7 +58,44 @@
             android:id="@+id/radio_system"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Padrão do Sistema"
+            android:text="@string/theme_system"
+            android:textColor="?attr/colorPrimary"
+            android:buttonTint="?attr/colorPrimary"/>
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/language_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/language_label"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/theme_radio_group" />
+
+    <RadioGroup
+        android:id="@+id/language_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/language_label">
+
+        <RadioButton
+            android:id="@+id/radio_lang_en"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/language_en"
+            android:textColor="?attr/colorPrimary"
+            android:buttonTint="?attr/colorPrimary"/>
+
+        <RadioButton
+            android:id="@+id/radio_lang_pt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/language_pt"
             android:textColor="?attr/colorPrimary"
             android:buttonTint="?attr/colorPrimary"/>
 

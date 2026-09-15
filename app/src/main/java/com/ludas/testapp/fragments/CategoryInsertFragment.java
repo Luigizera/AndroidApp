@@ -1,9 +1,12 @@
 package com.ludas.testapp.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +19,12 @@ import com.ludas.testapp.R;
 import com.ludas.testapp.database.AppDatabase;
 import com.ludas.testapp.database.Category;
 import com.ludas.testapp.database.CategoryDao;
-import com.ludas.testapp.database.User;
 
 public class CategoryInsertFragment extends Fragment {
     public static final String TAG = "CategoryInsertFragment";
 
-    private EditText editTextName;
+    private EditText editTextName, editTextColor;
+    private View viewColorPreview;
     private TextView textViewError;
     private ImageButton imageButtonSubmit;
     private CategoryDao categoryDao;
@@ -50,8 +53,30 @@ public class CategoryInsertFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_category_insert, container, false);
         editTextName = view.findViewById(R.id.fragment_category_insert_edittext_name);
+        editTextColor = view.findViewById(R.id.fragment_category_insert_edittext_color);
+        viewColorPreview = view.findViewById(R.id.fragment_category_insert_color_preview);
         textViewError = view.findViewById(R.id.fragment_category_insert_textview_error);
         imageButtonSubmit = view.findViewById(R.id.fragment_category_insert_submitbutton);
+
+        editTextColor.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    String colorStr = s.toString();
+                    if (!colorStr.startsWith("#")) colorStr = "#" + colorStr;
+                    int color = Color.parseColor(colorStr);
+                    viewColorPreview.setBackgroundColor(color);
+                } catch (Exception e) {
+                    viewColorPreview.setBackgroundColor(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
         Button buttonBack = view.findViewById(R.id.fragment_category_insert_backbutton);
         buttonBack.setOnClickListener(new View.OnClickListener() {
@@ -75,8 +100,20 @@ public class CategoryInsertFragment extends Fragment {
                     return;
                 }
                 textViewError.setVisibility(View.INVISIBLE);
-                categoryDao.insertAll(new Category(editTextName.getText().toString()));
+                String colorHex = editTextColor.getText().toString();
+                if (colorHex.isEmpty()) colorHex = "#000000";
+                if (!colorHex.startsWith("#")) colorHex = "#" + colorHex;
+                
+                try {
+                    Color.parseColor(colorHex);
+                } catch (Exception e) {
+                    colorHex = "#000000";
+                }
+
+                categoryDao.insertAll(new Category(editTextName.getText().toString(), colorHex));
                 editTextName.setText("");
+                editTextColor.setText("");
+                viewColorPreview.setBackgroundColor(Color.BLACK);
             }
         });
         return view;

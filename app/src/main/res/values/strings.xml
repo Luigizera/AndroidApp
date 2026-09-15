@@ -26,6 +26,7 @@
     <string name="left_nav_menu_title_navigation">Navigation</string>
     <string name="left_nav_menu_category">Category</string>
     <string name="left_nav_menu_home">Home</string>
+    <string name="left_nav_menu_graph">Graph</string>
     <string name="left_nav_menu_add">Add</string>
     <string name="left_nav_menu_profile">Profile</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -34,7 +35,9 @@
     <string name="hint_category_name">Write the category name…</string>
     <string name="hint_product_name">Write the product name…</string>
     <string name="hint_product_description">Write the product description…</string>
-    <string name="hint_product_price">Write the product price (Ex: 72.00)…</string>
+    <string name="hint_product_price">Ex: 72.00 (Sale)</string>
+    <string name="hint_product_purchase_price">Ex: 45.00 (Purchase)</string>
+    <string name="hint_product_min_stock">Ex: 5</string>
     <string name="hint_product_category">Select the product category…</string>
     <string name="hint_storage_quantity">Write the allocation quantity (Ex: 25)…</string>
     <string name="hint_storage_location">Write the storage location (Ex: B584)…</string>
@@ -48,7 +51,9 @@
     <string name="text_category_name">Category Name</string>
     <string name="text_product_name">Product name</string>
     <string name="text_product_description">Product description</string>
-    <string name="text_product_price">Product price</string>
+    <string name="text_product_price">Sales price</string>
+    <string name="text_product_purchase_price">Purchase price</string>
+    <string name="text_product_min_stock">Min. stock level</string>
     <string name="text_product_category">Product category</string>
     <string name="text_storage_quantity">Storage quantity</string>
     <string name="text_storage_location">Storage location</string>
@@ -63,4 +68,30 @@
     <string name="hint_storage_log_type">Select the type…</string>
     <string name="text_storage_log_quantity">Quantity</string>
     <string name="left_nav_menu_storage_log">Storage Logs</string>
+    <string name="error_delete_category_has_products">Cannot delete category. It is assigned to one or more products.</string>
+    <string name="error_delete_product_has_storage">Cannot delete product. It is present in the storage.</string>
+    <string name="error_delete_storage_has_logs">Cannot delete storage allocation. It has associated logs.</string>
+    <string name="settings_title">Settings</string>
+    <string name="theme_label">App Theme</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">System Default</string>
+    <string name="language_label">Language</string>
+    <string name="language_en">English</string>
+    <string name="language_pt">Portuguese (Brazil)</string>
+    <string name="select_categories">Select Categories</string>
+    <string name="no_categories_selected">No categories selected</string>
+    <string name="text_category_color">Category Color (Ex: #FFFFFF)</string>
+    <string name="hint_category_color">#000000</string>
+    <string name="graph_title">Financial Flow</string>
+    <string name="graph_in_legend">Entries (Cost)</string>
+    <string name="graph_out_legend">Exits (Revenue)</string>
+    <string name="graph_no_data">No data to display</string>
+    <string name="graph_total_invested">Total Invested</string>
+    <string name="graph_total_revenue">Total Revenue</string>
+    <string name="graph_net_balance">Net Balance</string>
+    <string name="filter_name">Name</string>
+    <string name="filter_id">ID</string>
+    <string name="button_back">Back</string>
+    <string name="button_cancel">Cancel</string>
 </resources>
