@@ -89,14 +89,13 @@ public class CategoryInsertFragment extends Fragment {
         imageButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clearErrors();
                 if(editTextName.getText().toString().isEmpty()) {
-                    textViewError.setVisibility(View.VISIBLE);
-                    textViewError.setText(R.string.error_empty_name);
+                    showError(R.string.error_empty_name, editTextName);
                     return;
                 }
                 if(categoryDao.findByNameEquals(editTextName.getText().toString()) != null) {
-                    textViewError.setVisibility(View.VISIBLE);
-                    textViewError.setText(R.string.category_error_already_exists);
+                    showError(R.string.category_error_already_exists, editTextName);
                     return;
                 }
                 textViewError.setVisibility(View.INVISIBLE);
@@ -111,11 +110,37 @@ public class CategoryInsertFragment extends Fragment {
                 }
 
                 categoryDao.insertAll(new Category(editTextName.getText().toString(), colorHex));
-                editTextName.setText("");
-                editTextColor.setText("");
-                viewColorPreview.setBackgroundColor(Color.BLACK);
+                clearFields();
             }
         });
         return view;
+    }
+
+    private void showError(int resId, View view) {
+        textViewError.setVisibility(View.VISIBLE);
+        textViewError.setText(resId);
+        if (view != null) {
+            int colorError = androidx.core.content.ContextCompat.getColor(requireContext(), R.color.red);
+            androidx.core.view.ViewCompat.setBackgroundTintList(view, android.content.res.ColorStateList.valueOf(colorError));
+        }
+    }
+
+    private void clearErrors() {
+        textViewError.setVisibility(View.INVISIBLE);
+        int colorDefault = android.graphics.Color.BLACK;
+        android.util.TypedValue typedValue = new android.util.TypedValue();
+        if (requireContext().getTheme().resolveAttribute(androidx.appcompat.R.attr.colorPrimary, typedValue, true)) {
+            colorDefault = typedValue.data;
+        }
+        android.content.res.ColorStateList tintList = android.content.res.ColorStateList.valueOf(colorDefault);
+        androidx.core.view.ViewCompat.setBackgroundTintList(editTextName, tintList);
+        androidx.core.view.ViewCompat.setBackgroundTintList(editTextColor, tintList);
+    }
+
+    private void clearFields() {
+        clearErrors();
+        editTextName.setText("");
+        editTextColor.setText("");
+        viewColorPreview.setBackgroundColor(Color.BLACK);
     }
 }

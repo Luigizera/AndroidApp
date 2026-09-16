@@ -31,6 +31,7 @@ public class StorageInsertFragment extends Fragment {
     private EditText editTextQuantity, editTextLocation;
     private TextView textViewError;
     private ImageButton imageButtonSubmit;
+    private android.widget.Button buttonBack;
     private StorageDao storageDao;
     private List<Product> list;
     private ArrayAdapter<Product> spinnerAdapter;
@@ -72,31 +73,31 @@ public class StorageInsertFragment extends Fragment {
 
         textViewError = view.findViewById(R.id.fragment_storage_insert_textview_error);
         imageButtonSubmit = view.findViewById(R.id.fragment_storage_insert_submitbutton);
+        buttonBack = view.findViewById(R.id.fragment_storage_insert_backbutton);
+
+        buttonBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         imageButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clearErrors();
                 if(editTextQuantity.getText().toString().isEmpty()) {
-                    textViewError.setVisibility(View.VISIBLE);
-                    textViewError.setText(R.string.error_empty_quantity);
+                    showError(R.string.error_empty_quantity, editTextQuantity);
                     return;
                 }
                 if(editTextLocation.getText().toString().isEmpty()) {
-                    textViewError.setVisibility(View.VISIBLE);
-                    textViewError.setText(R.string.error_empty_location);
+                    showError(R.string.error_empty_location, editTextLocation);
                     return;
                 }
                 if(spinnerProduct.getSelectedItem() == null) {
-                    textViewError.setVisibility(View.VISIBLE);
-                    textViewError.setText(R.string.error_empty_product_spinner);
+                    showError(R.string.error_empty_product_spinner, spinnerProduct);
                     return;
                 }
                 int quantity;
                 try {
                     quantity = Integer.parseInt(editTextQuantity.getText().toString());
                 } catch (Exception e) {
-                    textViewError.setVisibility(View.VISIBLE);
-                    textViewError.setText(R.string.error_convert_quantity);
+                    showError(R.string.error_convert_quantity, editTextQuantity);
                     return;
                 }
                 Product selectedValue = (Product) spinnerProduct.getSelectedItem();
@@ -104,10 +105,37 @@ public class StorageInsertFragment extends Fragment {
                 storageDao.insertAll(new Storage(quantity,
                         editTextLocation.getText().toString(),
                         selectedValue.getId_product()));
-                editTextQuantity.setText("");
-                editTextLocation.setText("");
+                clearFields();
             }
         });
         return view;
+    }
+
+    private void showError(int resId, View view) {
+        textViewError.setVisibility(View.VISIBLE);
+        textViewError.setText(resId);
+        if (view != null) {
+            int colorError = androidx.core.content.ContextCompat.getColor(requireContext(), R.color.red);
+            androidx.core.view.ViewCompat.setBackgroundTintList(view, android.content.res.ColorStateList.valueOf(colorError));
+        }
+    }
+
+    private void clearErrors() {
+        textViewError.setVisibility(View.INVISIBLE);
+        int colorDefault = android.graphics.Color.BLACK;
+        android.util.TypedValue typedValue = new android.util.TypedValue();
+        if (requireContext().getTheme().resolveAttribute(androidx.appcompat.R.attr.colorPrimary, typedValue, true)) {
+            colorDefault = typedValue.data;
+        }
+        android.content.res.ColorStateList tintList = android.content.res.ColorStateList.valueOf(colorDefault);
+        androidx.core.view.ViewCompat.setBackgroundTintList(editTextQuantity, tintList);
+        androidx.core.view.ViewCompat.setBackgroundTintList(editTextLocation, tintList);
+        androidx.core.view.ViewCompat.setBackgroundTintList(spinnerProduct, tintList);
+    }
+
+    private void clearFields() {
+        clearErrors();
+        editTextQuantity.setText("");
+        editTextLocation.setText("");
     }
 }

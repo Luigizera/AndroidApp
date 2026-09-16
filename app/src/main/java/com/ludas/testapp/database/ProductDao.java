@@ -22,6 +22,9 @@ public interface ProductDao {
     @Query("SELECT * FROM products WHERE id_product LIKE '%' || :search || '%' LIMIT :limit OFFSET :offset")
     List<Product> searchByIdPaged(String search, int limit, int offset);
 
+    @Query("SELECT * FROM products WHERE description LIKE '%' || :search || '%' LIMIT :limit OFFSET :offset")
+    List<Product> searchByDescriptionPaged(String search, int limit, int offset);
+
     @Query("SELECT COUNT(*) FROM products")
     int count();
 
@@ -30,6 +33,9 @@ public interface ProductDao {
 
     @Query("SELECT COUNT(*) FROM products WHERE id_product LIKE '%' || :search || '%'")
     int countSearchById(String search);
+
+    @Query("SELECT COUNT(*) FROM products WHERE description LIKE '%' || :search || '%'")
+    int countSearchByDescription(String search);
 
     @Query("SELECT * FROM products WHERE id_product IN (:ids)")
     List<Product> loadAllByIds(long[] ids);

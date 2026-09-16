@@ -91,6 +91,10 @@
     <string name="graph_net_balance">Saldo Líquido</string>
     <string name="filter_name">Nome</string>
     <string name="filter_id">ID</string>
+    <string name="filter_description">Descrição</string>
+    <string name="filter_date">Data</string>
+    <string name="filter_quantity">Quantidade</string>
     <string name="button_back">Voltar</string>
     <string name="button_cancel">Cancelar</string>
+    <string name="button_confirm_selection">Confirmar Seleção</string>
 </resources>

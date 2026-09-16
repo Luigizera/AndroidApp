@@ -22,6 +22,9 @@ public interface StorageDao {
     @Query("SELECT * FROM storage WHERE id_storage LIKE '%' || :search || '%' LIMIT :limit OFFSET :offset")
     List<Storage> searchByIdPaged(String search, int limit, int offset);
 
+    @Query("SELECT * FROM storage WHERE quantity LIKE '%' || :search || '%' LIMIT :limit OFFSET :offset")
+    List<Storage> searchByQuantityPaged(String search, int limit, int offset);
+
     @Query("SELECT COUNT(*) FROM storage")
     int count();
 
@@ -30,6 +33,9 @@ public interface StorageDao {
 
     @Query("SELECT COUNT(*) FROM storage WHERE id_storage LIKE '%' || :search || '%'")
     int countSearchById(String search);
+
+    @Query("SELECT COUNT(*) FROM storage WHERE quantity LIKE '%' || :search || '%'")
+    int countSearchByQuantity(String search);
 
     @Query("SELECT * FROM storage WHERE id_storage IN (:ids)")
     List<Storage> loadAllByIds(long[] ids);

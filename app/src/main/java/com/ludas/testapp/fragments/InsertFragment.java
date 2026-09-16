@@ -22,6 +22,7 @@ public class InsertFragment extends Fragment {
     private EditText editTextFirstName, editTextLastName;
     private TextView textviewError;
     private ImageButton submitButton;
+    private android.widget.Button buttonBack;
 
     private AppDatabase database;
 
@@ -50,28 +51,56 @@ public class InsertFragment extends Fragment {
         editTextLastName = view.findViewById(R.id.fragment_settings_lastname);
         textviewError = view.findViewById(R.id.fragment_settings_textview_error);
         submitButton = view.findViewById(R.id.fragment_settings_submitbutton);
+        buttonBack = view.findViewById(R.id.fragment_settings_backbutton);
+
+        buttonBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clearErrors();
                 UserDao userDao = database.userDao();
 
                 if(editTextFirstName.getText().toString().isEmpty()) {
-                    textviewError.setVisibility(View.VISIBLE);
-                    textviewError.setText(R.string.error_empty_firstname);
+                    showError(R.string.error_empty_firstname, editTextFirstName);
                     return;
                 }
                 if(editTextLastName.getText().toString().isEmpty()) {
-                    textviewError.setVisibility(View.VISIBLE);
-                    textviewError.setText(R.string.error_empty_lastname);
+                    showError(R.string.error_empty_lastname, editTextLastName);
                     return;
                 }
                 textviewError.setVisibility(View.INVISIBLE);
                 userDao.insertAll(new User(editTextFirstName.getText().toString(), editTextLastName.getText().toString()));
-                editTextFirstName.setText("");
-                editTextLastName.setText("");
+                clearFields();
             }
         });
         return view;
+    }
+
+    private void showError(int resId, View view) {
+        textviewError.setVisibility(View.VISIBLE);
+        textviewError.setText(resId);
+        if (view != null) {
+            int colorError = androidx.core.content.ContextCompat.getColor(requireContext(), R.color.red);
+            androidx.core.view.ViewCompat.setBackgroundTintList(view, android.content.res.ColorStateList.valueOf(colorError));
+        }
+    }
+
+    private void clearErrors() {
+        textviewError.setVisibility(View.INVISIBLE);
+        int colorDefault = android.graphics.Color.BLACK;
+        android.util.TypedValue typedValue = new android.util.TypedValue();
+        if (requireContext().getTheme().resolveAttribute(androidx.appcompat.R.attr.colorPrimary, typedValue, true)) {
+            colorDefault = typedValue.data;
+        }
+        android.content.res.ColorStateList tintList = android.content.res.ColorStateList.valueOf(colorDefault);
+        androidx.core.view.ViewCompat.setBackgroundTintList(editTextFirstName, tintList);
+        androidx.core.view.ViewCompat.setBackgroundTintList(editTextLastName, tintList);
+    }
+
+    private void clearFields() {
+        clearErrors();
+        editTextFirstName.setText("");
+        editTextLastName.setText("");
     }
 }

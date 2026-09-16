@@ -258,16 +258,17 @@ public class CategoryFragment extends Fragment {
     }
 
     private void atualizarPaginacao() {
-        if (paginationContainer == null) return;
+        android.content.Context context = getContext();
+        if (context == null || paginationContainer == null) return;
         paginationContainer.removeAllViews();
 
         TypedValue typedValue = new TypedValue();
-        int colorPrimaryAttr = requireContext().getResources().getIdentifier("colorPrimary", "attr", requireContext().getPackageName());
-        int colorSecondaryAttr = requireContext().getResources().getIdentifier("colorSecondary", "attr", requireContext().getPackageName());
+        int colorPrimaryAttr = context.getResources().getIdentifier("colorPrimary", "attr", context.getPackageName());
+        int colorSecondaryAttr = context.getResources().getIdentifier("colorSecondary", "attr", context.getPackageName());
 
-        requireContext().getTheme().resolveAttribute(colorPrimaryAttr, typedValue, true);
+        context.getTheme().resolveAttribute(colorPrimaryAttr, typedValue, true);
         int colorPrimary = typedValue.data;
-        requireContext().getTheme().resolveAttribute(colorSecondaryAttr, typedValue, true);
+        context.getTheme().resolveAttribute(colorSecondaryAttr, typedValue, true);
         int colorSecondary = typedValue.data;
 
         int marginPx = (int) (4 * getResources().getDisplayMetrics().density);

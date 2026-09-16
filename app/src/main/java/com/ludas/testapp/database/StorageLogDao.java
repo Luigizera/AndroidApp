@@ -19,11 +19,17 @@ public interface StorageLogDao {
     @Query("SELECT * FROM storage_log WHERE id_storage_log LIKE '%' || :search || '%' LIMIT :limit OFFSET :offset")
     List<StorageLog> searchByIdPaged(String search, int limit, int offset);
 
+    @Query("SELECT * FROM storage_log WHERE date LIKE '%' || :search || '%' LIMIT :limit OFFSET :offset")
+    List<StorageLog> searchByDatePaged(String search, int limit, int offset);
+
     @Query("SELECT COUNT(*) FROM storage_log")
     int count();
 
     @Query("SELECT COUNT(*) FROM storage_log WHERE id_storage_log LIKE '%' || :search || '%'")
     int countSearchById(String search);
+
+    @Query("SELECT COUNT(*) FROM storage_log WHERE date LIKE '%' || :search || '%'")
+    int countSearchByDate(String search);
 
     @Query("SELECT * FROM storage_log WHERE id_storage_log IN (:ids)")
     List<StorageLog> loadAllByIds(long[] ids);

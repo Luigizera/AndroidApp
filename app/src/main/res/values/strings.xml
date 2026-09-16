@@ -92,6 +92,10 @@
     <string name="graph_net_balance">Net Balance</string>
     <string name="filter_name">Name</string>
     <string name="filter_id">ID</string>
+    <string name="filter_description">Description</string>
+    <string name="filter_date">Date</string>
+    <string name="filter_quantity">Quantity</string>
     <string name="button_back">Back</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_confirm_selection">Confirm Selection</string>
 </resources>

@@ -24,7 +24,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?attr/colorPrimary"
+            android:background="@color/card_category_color"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -33,14 +33,14 @@
                 android:layout_height="48dp"
                 android:contentDescription="@string/left_nav_menu_category"
                 android:src="@drawable/outline_category_24"
-                app:tint="?attr/colorSecondary" />
+                app:tint="@color/card_category_icon_color" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/left_nav_menu_category"
-                android:textColor="?attr/colorSecondary"
+                android:textColor="@color/card_category_icon_color"
                 android:textStyle="bold" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -61,7 +61,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?attr/colorPrimary"
+            android:background="@color/card_product_color"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -69,14 +69,14 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/baseline_blender_24"
-                app:tint="?attr/colorSecondary" />
+                app:tint="@color/card_product_icon_color" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/left_nav_menu_product"
-                android:textColor="?attr/colorSecondary"
+                android:textColor="@color/card_product_icon_color"
                 android:textStyle="bold" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -97,7 +97,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?attr/colorPrimary"
+            android:background="@color/card_storage_color"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -105,14 +105,14 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/outline_box_24"
-                app:tint="?attr/colorSecondary" />
+                app:tint="@color/card_storage_icon_color" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/left_nav_menu_storage"
-                android:textColor="?attr/colorSecondary"
+                android:textColor="@color/card_storage_icon_color"
                 android:textStyle="bold" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -133,7 +133,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?attr/colorPrimary"
+            android:background="@color/card_storage_log_color"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -141,14 +141,14 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/outline_box_24"
-                app:tint="?attr/colorSecondary" />
+                app:tint="@color/card_storage_log_icon_color" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/left_nav_menu_storage_log"
-                android:textColor="?attr/colorSecondary"
+                android:textColor="@color/card_storage_log_icon_color"
                 android:textStyle="bold" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

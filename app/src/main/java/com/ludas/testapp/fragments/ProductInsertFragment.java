@@ -33,10 +33,9 @@ public class ProductInsertFragment extends Fragment {
     private EditText editTextName, editTextDescription, editTextPrice, editTextPurchasePrice, editTextMinStock;
     private TextView textViewError, textViewSelectedCategories;
     private ImageButton imageButtonSubmit;
-    private Button buttonSelectCategories;
+    private Button buttonSelectCategories, buttonBack;
     
     private List<Category> allCategories;
-    private boolean[] checkedCategories;
     private List<Category> selectedCategories = new ArrayList<>();
     
     private ProductDao productDao;
@@ -60,8 +59,6 @@ public class ProductInsertFragment extends Fragment {
         allCategories = database.categoryDao().getAll();
         productDao = database.productDao();
         productCategoryDao = database.productCategoryDao();
-        
-        checkedCategories = new boolean[allCategories.size()];
     }
 
     @Override
@@ -78,26 +75,49 @@ public class ProductInsertFragment extends Fragment {
         
         textViewError = view.findViewById(R.id.fragment_product_insert_textview_error);
         imageButtonSubmit = view.findViewById(R.id.fragment_product_insert_submitbutton);
+        buttonBack = view.findViewById(R.id.fragment_product_insert_backbutton);
 
-        buttonSelectCategories.setOnClickListener(v -> showCategorySelectionDialog());
+        buttonBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
+
+        buttonSelectCategories.setOnClickListener(v -> {
+            ArrayList<Long> ids = new ArrayList<>();
+            for (Category cat : selectedCategories) ids.add(cat.getId_category());
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.activity_main_framelayout, CategorySelectionFragment.newInstance(ids))
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        getParentFragmentManager().setFragmentResultListener(CategorySelectionFragment.REQUEST_KEY, getViewLifecycleOwner(), (requestKey, bundle) -> {
+            List<Long> ids = (List<Long>) bundle.getSerializable(CategorySelectionFragment.EXTRA_SELECTED_IDS);
+            if (ids != null) {
+                selectedCategories.clear();
+                for (Long id : ids) {
+                    Category cat = findCategoryById(id);
+                    if (cat != null) selectedCategories.add(cat);
+                }
+                updateSelectedCategoriesText();
+            }
+        });
 
         imageButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clearErrors();
                 if(editTextName.getText().toString().isEmpty()) {
-                    showError(R.string.error_empty_name);
+                    showError(R.string.error_empty_name, editTextName);
                     return;
                 }
                 if(editTextDescription.getText().toString().isEmpty()) {
-                    showError(R.string.error_empty_description);
+                    showError(R.string.error_empty_description, editTextDescription);
                     return;
                 }
                 if(editTextPrice.getText().toString().isEmpty()) {
-                    showError(R.string.error_empty_price);
+                    showError(R.string.error_empty_price, editTextPrice);
                     return;
                 }
                 if(selectedCategories.isEmpty()) {
-                    showError(R.string.error_empty_category_spinner);
+                    showError(R.string.error_empty_category_spinner, buttonSelectCategories);
                     return;
                 }
                 
@@ -126,59 +146,63 @@ public class ProductInsertFragment extends Fragment {
                     
                     clearFields();
                 } catch (NumberFormatException e) {
-                    showError(R.string.error_convert_price);
+                    showError(R.string.error_convert_price, editTextPrice);
                 }
             }
         });
         return view;
     }
     
-    private void showCategorySelectionDialog() {
-        String[] categoryNames = new String[allCategories.size()];
-        for (int i = 0; i < allCategories.size(); i++) {
-            categoryNames[i] = allCategories.get(i).getName();
+    private void updateSelectedCategoriesText() {
+        StringBuilder sb = new StringBuilder();
+        for (Category cat : selectedCategories) {
+            if (sb.length() > 0) sb.append(", ");
+            sb.append(cat.getName());
         }
-
-        new MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.select_categories)
-                .setMultiChoiceItems(categoryNames, checkedCategories, (dialog, which, isChecked) -> checkedCategories[which] = isChecked)
-                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                    selectedCategories.clear();
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < checkedCategories.length; i++) {
-                        if (checkedCategories[i]) {
-                            Category cat = allCategories.get(i);
-                            selectedCategories.add(cat);
-                            if (sb.length() > 0) sb.append(", ");
-                            sb.append(cat.getName());
-                        }
-                    }
-                    if (sb.length() > 0) {
-                        textViewSelectedCategories.setText(sb.toString());
-                    } else {
-                        textViewSelectedCategories.setText(R.string.no_categories_selected);
-                    }
-                })
-                .setNegativeButton(R.string.button_cancel, null)
-                .show();
+        textViewSelectedCategories.setText(sb.length() > 0 ? sb.toString() : getString(R.string.no_categories_selected));
     }
-    
-    private void showError(int resId) {
+
+    private void showError(int resId, View view) {
         textViewError.setVisibility(View.VISIBLE);
         textViewError.setText(resId);
+        if (view != null) {
+            int colorError = androidx.core.content.ContextCompat.getColor(requireContext(), R.color.red);
+            androidx.core.view.ViewCompat.setBackgroundTintList(view, android.content.res.ColorStateList.valueOf(colorError));
+        }
+    }
+
+    private void clearErrors() {
+        textViewError.setVisibility(View.INVISIBLE);
+        int colorDefault = android.graphics.Color.BLACK;
+        android.util.TypedValue typedValue = new android.util.TypedValue();
+        if (requireContext().getTheme().resolveAttribute(androidx.appcompat.R.attr.colorPrimary, typedValue, true)) {
+            colorDefault = typedValue.data;
+        }
+
+        android.content.res.ColorStateList tintList = android.content.res.ColorStateList.valueOf(colorDefault);
+        androidx.core.view.ViewCompat.setBackgroundTintList(editTextName, tintList);
+        androidx.core.view.ViewCompat.setBackgroundTintList(editTextDescription, tintList);
+        androidx.core.view.ViewCompat.setBackgroundTintList(editTextPrice, tintList);
+        androidx.core.view.ViewCompat.setBackgroundTintList(editTextPurchasePrice, tintList);
+        androidx.core.view.ViewCompat.setBackgroundTintList(editTextMinStock, tintList);
+        androidx.core.view.ViewCompat.setBackgroundTintList(buttonSelectCategories, tintList);
     }
     
     private void clearFields() {
+        clearErrors();
         editTextName.setText("");
         editTextDescription.setText("");
         editTextPrice.setText("");
         editTextPurchasePrice.setText("");
         editTextMinStock.setText("");
         selectedCategories.clear();
-        for (int i = 0; i < checkedCategories.length; i++) {
-            checkedCategories[i] = false;
-        }
         textViewSelectedCategories.setText(R.string.no_categories_selected);
-        textViewError.setVisibility(View.INVISIBLE);
+    }
+
+    private Category findCategoryById(long id) {
+        for (Category cat : allCategories) {
+            if (cat.getId_category() == id) return cat;
+        }
+        return null;
     }
 }

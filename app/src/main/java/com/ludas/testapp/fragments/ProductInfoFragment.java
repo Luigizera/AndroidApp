@@ -45,7 +45,6 @@ public class ProductInfoFragment extends Fragment {
     private StorageDao storageDao;
 
     private List<Category> allCategories;
-    private boolean[] checkedCategories;
     private List<Category> selectedCategories = new ArrayList<>();
 
     public ProductInfoFragment() {
@@ -75,15 +74,6 @@ public class ProductInfoFragment extends Fragment {
                 
                 if(product != null) {
                     selectedCategories = productCategoryDao.getCategoriesForProduct(productId);
-                    checkedCategories = new boolean[allCategories.size()];
-                    for (int i = 0; i < allCategories.size(); i++) {
-                        for (Category selected : selectedCategories) {
-                            if (selected.getId_category() == allCategories.get(i).getId_category()) {
-                                checkedCategories[i] = true;
-                                break;
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -113,7 +103,26 @@ public class ProductInfoFragment extends Fragment {
 
             updateSelectedCategoriesText();
 
-            buttonSelectCategories.setOnClickListener(v -> showCategorySelectionDialog());
+            buttonSelectCategories.setOnClickListener(v -> {
+                ArrayList<Long> ids = new ArrayList<>();
+                for (Category cat : selectedCategories) ids.add(cat.getId_category());
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.activity_main_framelayout, CategorySelectionFragment.newInstance(ids))
+                        .addToBackStack(null)
+                        .commit();
+            });
+
+            getParentFragmentManager().setFragmentResultListener(CategorySelectionFragment.REQUEST_KEY, getViewLifecycleOwner(), (requestKey, bundle) -> {
+                List<Long> ids = (List<Long>) bundle.getSerializable(CategorySelectionFragment.EXTRA_SELECTED_IDS);
+                if (ids != null) {
+                    selectedCategories.clear();
+                    for (Long id : ids) {
+                        Category cat = findCategoryById(id);
+                        if (cat != null) selectedCategories.add(cat);
+                    }
+                    updateSelectedCategoriesText();
+                }
+            });
 
             imageButtonSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -203,43 +212,24 @@ public class ProductInfoFragment extends Fragment {
         return view;
     }
     
-    private void showCategorySelectionDialog() {
-        String[] categoryNames = new String[allCategories.size()];
-        for (int i = 0; i < allCategories.size(); i++) {
-            categoryNames[i] = allCategories.get(i).getName();
-        }
-
-        new MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.select_categories)
-                .setMultiChoiceItems(categoryNames, checkedCategories, (dialog, which, isChecked) -> checkedCategories[which] = isChecked)
-                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                    selectedCategories.clear();
-                    for (int i = 0; i < checkedCategories.length; i++) {
-                        if (checkedCategories[i]) {
-                            selectedCategories.add(allCategories.get(i));
-                        }
-                    }
-                    updateSelectedCategoriesText();
-                })
-                .setNegativeButton(R.string.button_cancel, null)
-                .show();
-    }
-    
     private void updateSelectedCategoriesText() {
         StringBuilder sb = new StringBuilder();
         for (Category cat : selectedCategories) {
             if (sb.length() > 0) sb.append(", ");
             sb.append(cat.getName());
         }
-        if (sb.length() > 0) {
-            textViewSelectedCategories.setText(sb.toString());
-        } else {
-            textViewSelectedCategories.setText(R.string.no_categories_selected);
-        }
+        textViewSelectedCategories.setText(sb.length() > 0 ? sb.toString() : getString(R.string.no_categories_selected));
     }
 
     private void showError(int resId) {
         textViewError.setVisibility(View.VISIBLE);
         textViewError.setText(resId);
+    }
+
+    private Category findCategoryById(long id) {
+        for (Category cat : allCategories) {
+            if (cat.getId_category() == id) return cat;
+        }
+        return null;
     }
 }

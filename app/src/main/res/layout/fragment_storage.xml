@@ -4,19 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="?attr/colorSecondary"
     tools:context=".fragments.StorageFragment">
 
+    <LinearLayout
+        android:id="@+id/fragment_storage_header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="?attr/colorSecondary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/fragment_storage_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:queryHint="@string/hint_storage_location"
+            android:focusable="true"
+            android:clickable="true"
+            app:iconifiedByDefault="false" />
+
+        <Spinner
+            android:id="@+id/fragment_storage_filter_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="?attr/colorPrimary" />
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_storage_recview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/fragment_storage_header"
+        app:layout_constraintBottom_toTopOf="@id/fragment_storage_pagination_container"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/list_storage" />
+
+    <LinearLayout
+        android:id="@+id/fragment_storage_pagination_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageButton
         android:id="@+id/fragment_storage_buttonadd"
@@ -26,9 +66,9 @@
         android:background="@drawable/rounded_background"
         android:backgroundTint="?attr/colorPrimary"
         android:src="@drawable/baseline_add_24"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_storage_recview"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="?attr/colorSecondary"
+        app:layout_constraintBottom_toTopOf="@id/fragment_storage_pagination_container"
         app:layout_constraintStart_toStartOf="parent"
-        app:tint="?attr/colorSecondary" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
+        <Button
+            android:id="@+id/fragment_storage_insert_backbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/button_back"
+            android:textColor="?attr/colorSecondary"
+            android:backgroundTint="?attr/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/fragment_storage_insert_textview_error"
             android:layout_width="wrap_content"
@@ -26,7 +38,7 @@
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_storage_insert_backbutton" />
 
         <TextView
             android:id="@+id/fragment_storage_insert_textview_product"
